@@ -1,0 +1,256 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// enum Role {
+//   SUPERADMIN
+//   MANAGER
+//   EMPLOYEE
+// }
+
+// enum Status {
+//   ACTIVE
+//   INACTIVE
+// }
+
+// enum LogType {
+//   WORK_START
+//   WORK_END
+//   BREAK_START
+//   BREAK_END
+// }
+
+// enum TokenStatus {
+//   PENDING
+//   SERVING
+//   COMPLETED
+// }
+
+model User {
+  id               Int       @id @default(autoincrement())
+  fullName         String
+  email            String    @unique
+  password         String
+  role             String      @default("EMPLOYEE")
+  status           String    @default("ACTIVE")
+  isAvailable      Boolean   @default(true)
+  isWorking        Boolean   @default(false) // Add this field
+  isOnBreak        Boolean   @default(false) // Add this field
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  resetToken       String?
+  resetTokenExpiry DateTime?
+  createdBy        User?     @relation("CreatedBy", fields: [createdById], references: [id])
+  createdById      Int?
+  createdUsers     User[]    @relation("CreatedBy")
+
+  // Relations
+  branch         Branch?   @relation(fields: [branchId], references: [id])
+  branchId       Int?
+  assignedDesk   Desk?     @relation("DeskEmployees", fields: [assignedDeskId], references: [id])
+  assignedDeskId Int?
+  managedDesk    Desk?     @relation("DeskManager")
+  managedDeskId  Int?      @unique
+  managedBranch  Branch?   @relation("BranchManager")
+  logs           UserLog[]
+  tokens         Token[]
+}
+
+model Branch {
+  id             Int      @id @default(autoincrement())
+  name           String
+  address        String
+  city           String
+  state          String
+  zipCode        String
+  phone          String
+  currentTokenNo Int      @default(0) // To track last issued token number
+  status         String   @default("ACTIVE")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  manager   User?  @relation("BranchManager", fields: [managerId], references: [id])
+  managerId Int?   @unique // One manager per branch
+  employees User[] // All employees in this branch
+  desks     Desk[] // All desks in this branch
+
+  services    BranchService[]
+  subServices BranchSubService[]
+  tokens      Token[]
+  tokenSeries TokenSeries[]
+
+  Numerator Numerator[]
+}
+
+model Desk {
+  id              Int              @id @default(autoincrement())
+  name            String
+  displayName     String?
+  description     String?
+  status          String           @default("ACTIVE")
+  branchId        Int
+  branch          Branch           @relation(fields: [branchId], references: [id])
+  managerId       Int?             @unique
+  manager         User?            @relation("DeskManager", fields: [managerId], references: [id])
+  employees       User[]           @relation("DeskEmployees")
+  tokens          Token[]          @relation("DeskTokens")
+  deskServices    DeskService[]
+  deskSubServices DeskSubService[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DeskService {
+  id        Int     @id @default(autoincrement())
+  deskId    Int
+  serviceId Int
+  status    String  @default("ACTIVE")
+  desk      Desk    @relation(fields: [deskId], references: [id])
+  service   Service @relation("DeskToService", fields: [serviceId], references: [id])
+}
+
+model DeskSubService {
+  id           Int        @id @default(autoincrement())
+  deskId       Int
+  subServiceId Int
+  status       String     @default("ACTIVE")
+  desk         Desk       @relation(fields: [deskId], references: [id])
+  subService   SubService @relation("DeskToSubService", fields: [subServiceId], references: [id])
+  tokens       Token[]    @relation("DeskSubServiceTokens")
+
+  @@unique([deskId, subServiceId])
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  name        String
+  status      String   @default("ACTIVE")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  creatorRole String     @default("SUPERADMIN")
+
+  // Relations
+  subServices SubService[]
+  branches    BranchService[]
+  desks       DeskService[]   @relation("DeskToService")
+  tokens      Token[] // Add this line
+  tokenSeries TokenSeries[] // Add this line
+}
+
+model SubService {
+  id        Int                @id @default(autoincrement())
+  name      String
+  status    String             @default("ACTIVE")
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  tokens    Token[]
+  // Relations
+  service   Service            @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  serviceId Int
+  branches  BranchSubService[]
+  desks     DeskSubService[]   @relation("DeskToSubService")
+}
+
+// Junction table for Branch-Service many-to-many relationship
+model BranchService {
+  id        Int      @id @default(autoincrement())
+  branch    Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  branchId  Int
+  service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  serviceId Int
+  status    String   @default("ACTIVE")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([branchId, serviceId])
+}
+
+// Junction table for Branch-SubService many-to-many relationship
+model BranchSubService {
+  id           Int        @id @default(autoincrement())
+  branch       Branch     @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  branchId     Int
+  subService   SubService @relation(fields: [subServiceId], references: [id], onDelete: Cascade)
+  subServiceId Int
+  status       String     @default("ACTIVE")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([branchId, subServiceId])
+}
+
+model UserLog {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  logType   String
+  startTime DateTime
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, date])
+}
+
+model TokenSeries {
+  id            Int      @id @default(autoincrement())
+  prefix        String // e.g., "L" for Loans
+  startFrom     Int      @default(1)
+  currentNumber Int      @default(0)
+  endAt         Int
+  serviceId     Int
+  service       Service  @relation(fields: [serviceId], references: [id])
+  branchId      Int
+  branch        Branch   @relation(fields: [branchId], references: [id])
+  active        Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([serviceId, branchId])
+}
+
+model Token {
+  id             Int         @id @default(autoincrement())
+  displayNumber  String // e.g., "L001"
+  sequenceNumber Int // The actual number in sequence
+  status         String     @default("PENDING")
+  branchId       Int
+  branch         Branch      @relation(fields: [branchId], references: [id])
+  serviceId      Int
+  service        Service     @relation(fields: [serviceId], references: [id])
+  subServiceId   Int
+  subService     SubService  @relation(fields: [subServiceId], references: [id])
+  deskId         Int? // Make nullable since desk assignment might happen after token generation
+  desk           Desk?       @relation("DeskTokens", fields: [deskId], references: [id])
+  assignedToId   Int? // Make nullable since employee assignment might happen after token generation
+  assignedTo     User?       @relation(fields: [assignedToId], references: [id])
+
+  deskSubService DeskSubService? @relation("DeskSubServiceTokens", fields: [deskId, subServiceId], references: [deskId, subServiceId])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Numerator {
+  id       Int    @id @default(autoincrement())
+  name     String
+  serialNo Int
+  status   String @default("ACTIVE")
+  branchId Int
+  branch   Branch @relation(fields: [branchId], references: [id])
+
+  @@unique([serialNo, branchId]) // Ensure unique serial numbers within a branch
+}
