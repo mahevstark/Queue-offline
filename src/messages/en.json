@@ -1,0 +1,1449 @@
+{
+    "metadata": {
+        "title": "Queue Soft | Queue Management System",
+        "description": "Manage customers queue, work force, employees, branches or other stuff efficiently!"
+    },
+    "sidebar": {
+        "title": "Queue Soft",
+        "navigation": {
+            "dashboard": "Dashboard",
+            "users": "Users",
+            "employees": "Employees",
+            "services": "Services",
+            "displayScreen": "Display Screen",
+            "employeeDashboard": "Employee Dashboard",
+            "deskScreens": "Desk Screens",
+            "numerators": "Numerators",
+            "branches": "Branches",
+            "myBranch": "My Branch"
+        },
+        "logout": "Logout",
+        "userRole": {
+            "MANAGER": "Manager",
+            "SUPERADMIN": "Super Admin",
+            "EMPLOYEE": "Employee"
+        }
+    },
+    "dashboard": {
+        "pageTitle": "Track performance and activities",
+        "stats": {
+            "todayGathering": "Today's Gathering",
+            "pendingAppointments": "Pending Appointments",
+            "dailyAverage": "Daily Average",
+            "averageWaitingTime": "Average Waiting Time",
+            "noData": "No data"
+        },
+        "branchStats": {
+            "waitingCustomers": "Waiting Customers",
+            "activeDesks": "Active Desks",
+            "totalEmployees": "Total Employees",
+            "onlineWorkers": "Online Workers",
+            "workersOnBreak": "Workers on Break",
+            "activeNumerators": "Active Numerators",
+            "totalNumerators": "Total Numerators"
+        },
+        "charts": {
+            "dailyTokens": {
+                "title": "Daily Intervals Distribution",
+                "loading": "Loading chart data...",
+                "label": "Daily Interval Number",
+                "totalTokens": "Total Interval Number"
+            },
+            "serviceDistribution": {
+                "title": "Service Distribution",
+                "loading": "Loading chart data...",
+                "noData": "No service data available"
+            },
+            "peakHours": {
+                "title": "Peak Hours Analysis",
+                "timeframes": {
+                    "week": "Week",
+                    "month": "Month",
+                    "year": "Year"
+                },
+                "label": "Number of Intervals",
+                "axisLabels": {
+                    "tokens": "Number of Intervals Issued",
+                    "time": "Time of Day"
+                },
+                "tooltip": "interval(s) issued between",
+                "description": {
+                    "line1": "This chart shows the distribution of interval issuance throughout the day.",
+                    "line2": "Longer bars indicate higher activity during those hours."
+                }
+            },
+            "doughnut": {
+                "tokens": "Intervals",
+                "percentage": "Percentage"
+            },
+            "tokenStatusOptions": {
+                "count": "Count",
+                "percentage": "Percentage"
+            },
+            "busyHours": {
+                "label": "Number of Intervals"
+            },
+            "busyHoursTooltip": {
+                "token": "interval",
+                "issuedBetween": "issued between"
+            },
+            "tokenStatusDistribution": {
+                "title": "Interval Number Status Distribution",
+                "noData": "No interval number data available",
+                "loading": "Loading chart data...",
+                "labels": {
+                    "COMPLETED": "Completed",
+                    "PENDING": "Pending",
+                    "SERVING": "Serving"
+                }
+            }
+            
+        },
+        "employeeActivities": {
+            "title": "Today's Employee Activities",
+            "search": {
+                "placeholder": "Search employee, desk..."
+
+            },
+            "logs": {
+                "employeeCounter": "Employee / Counter",
+                "status": "Status",
+                "currentToken": "Current Interval#",
+                "time": "Time"
+            },
+            "noData": {
+                "noActivities": "No activity logs for today",
+                "noMatching": "No matching activities found",
+                "noActiveToken": "No active interval number"
+
+            },
+            "logTypes": {
+                "WORK_START": "Started Work",
+                "WORK_END": "Ended Work",
+                "BREAK_START": "Started Break",
+                "BREAK_END": "Ended Break"
+            }
+        }
+    },
+    "branches": {
+        "pageTitle": {
+            "superadmin": "Manage and review all branches",
+            "manager": "Manage and view branch details"
+        },
+        "actions": {
+            "addBranch": "Add Branch",
+            "delete": "Delete Branch",
+            "edit": "Edit Branch",
+            "services": "Services",
+            "desks": "Desks",
+            "users": "Users",
+            "tokenSeries": "Interval Series",
+            "viewTokenSeries": "View Interval Series",
+            "employees": "Employees",
+            "viewEmployees": "View Employees",
+            "manageNumerators": "Manage Numerators",
+            "viewDesks": "View Desks",
+            "viewServices": "View Services"
+        },
+        "quickActions": "Quick Actions",
+        "table": {
+            "allStatus": "All Status",  
+            "active": "Active",
+            "inactive": "Inactive",
+            "name": "Name",
+            "address": "Address",
+            "contact": "Contact",
+            "managedBy": "Managed By",
+            "status": "Status",
+            "actions": "Actions",
+            "noManager": "No manager assigned"
+        },
+        "branchDetails": {
+            "city": "City",
+            "state": "State",
+            "zip": "ZIP",
+            "address": "Address",
+            "contact": "Contact",
+            "status": "Status",
+            "managedBy": "Managed By",
+            "managerEmail": "Manager Email"
+        },
+        "searchPlaceholder": "Search branches...",
+        "deleteModal": {
+            "title": "Delete Branch",
+            "message": "Are you sure you want to delete {branchName}? This action cannot be undone.",
+            "confirmText": "Delete"
+        },
+        "pagination": {
+            "itemsPerPage": "items per page",
+            "of": "of"
+        },
+        "notifications": {
+            "loadError": "Failed to load branches",
+            "deleteSuccess": "Branch deleted successfully",
+            "deleteError": "Failed to delete branch"
+        },
+        "noBranchesFound": "No branches found.",
+        "unauthorized": "You are not authorized to view this page.",
+        "status": {
+            "ACTIVE": "Active",
+            "INACTIVE": "Inactive"
+        }
+    },
+    "branchForm": {
+        "title": {
+            "create": "Create Branch",
+            "edit": "Edit Branch"
+        },
+        "fields": {
+            "name": {
+                "label": "Branch Name ",
+                "placeholder": "Enter branch name",
+                "error": "Branch name is required"
+            },
+            "address": {
+                "label": "Address ",
+                "placeholder": "Enter street address",
+                "error": "Address is required"
+            },
+            "city": {
+                "label": "City ",
+                "placeholder": "Enter city",
+                "error": "City is required"
+            },
+
+            "state": {
+                "label": "State ",
+                "placeholder": "Enter state",
+                "error": "State is required"
+            },
+            "zipCode": {
+                "label": "ZIP Code ",
+                "placeholder": "Enter ZIP code",
+                "error": {
+                    "required": "ZIP code is required",
+                    "invalid": "Invalid ZIP code format"
+                }
+            },
+            "phone": {
+                "label": "Phone Number ",
+                "placeholder": "Enter phone number",
+                "error": {
+                    "required": "Phone number is required",
+                    "invalid": "Invalid phone number format"
+                }
+            },
+            "manager": {
+                "label": "Branch Manager",
+                "placeholder": "Select a manager",
+                "alreadyAssigned": "Already assigned to another branch",
+                "note": "Managers can also be assigned after branch creation."
+            }
+        },
+        "buttons": {
+            "cancel": "Cancel",
+            "create": "Create Branch",
+            "update": "Update Branch",
+            "creating": "Creating...",
+            "updating": "Updating..."
+        },
+        "notifications": {
+            "validateForm": "Please complete the form",
+            "createLoading": "Creating branch...",
+            "updateLoading": "Updating branch...",
+            "createSuccess": "Branch created successfully",
+            "updateSuccess": "Branch updated successfully",
+            "loadManagersError": "Failed to load managers",
+            "error": "Failed to {mode} branch"
+
+        }
+    },
+    "tokenSeries": {
+        "title": "Interval Number Series Management",
+        "stats": {
+            "servicesAvailable": "{count} service{count, plural, one {} other {s}} available"
+        },
+        "buttons": {
+            "addNew": "Add New Series",
+            "activate": "Activate",
+            "edit": "Edit",
+            "delete": "Delete",
+            "deactivate": "Deactivate",
+            "createFirst": "Create First Series",
+            "tryAgain": "Try Again"
+        },
+        "table": {
+            "headers": {
+                "service": "Service",
+                "prefix": "Prefix",
+                "currentNumber": "Current Number",
+                "range": "Range",
+                "status": "Status",
+                "actions": "Actions"
+            }
+        },
+        "emptyState": {
+            "title": "No Interval Number Series Found",
+            "withServices": "Get started by creating your first interval number series.",
+            "noServices": "Please add services before creating interval number series."
+        },
+        "form": {
+            "title": {
+                "create": "Create New Interval Number Series",
+                "edit": "Edit Interval Number Series"
+            },
+            "fields": {
+                "service": {
+                    "label": "Service",
+                    "placeholder": "Select a service"
+                },
+                "prefix": {
+                    "label": "Prefix",
+                    "placeholder": "Enter prefix (e.g., A, B, C)"
+                },
+                "range": {
+                    "start": {
+                        "label": "Start From",
+                        "placeholder": "Enter start number"
+                    },
+                    "end": {
+                        "label": "End At",
+                        "placeholder": "Enter end number"
+                    }
+                }
+            }
+        },
+        "notifications": {
+            "validation": "Please fill in all required fields",
+            "createSuccess": "Interval number series created successfully",
+            "updateSuccess": "Interval number series updated successfully",
+            "createError": "Failed to create interval number series",
+            "updateError": "Failed to update interval number series",
+            "deleteConfirm": "Are you sure you want to delete this interval number series?",
+            "deleteSuccess": "Interval number series deleted successfully",
+            "deleteError": "Failed to delete interval number series",
+            "statusToggle": "Interval number series {status} successfully",
+            "statusToggleError": "Failed to update status",
+            "loadError": "Failed to load data"
+        },
+        "error": {
+            "title": "Error ({status})",
+            "defaultTitle": "Error",
+            "unexpectedError": "An unexpected error occurred"
+        },
+        "tokenSeriesForm": {
+        "title": {
+            "create": "Create New Interval Number Series",
+            "edit": "Edit Interval Number Series"
+        },
+        "fields": {
+            "service": {
+                "label": "Service *",
+                "placeholder": "Select a service",
+                "error": "Service selection is required"
+            },
+            "prefix": {
+                "label": "Prefix *",
+                "placeholder": "e.g., A, B, LON",
+                "error": "Prefix is required",
+                "hint": "Maximum 3 characters"
+            },
+            "startFrom": {
+                "label": "Start From *",
+                "placeholder": "Enter start number",
+                "error": "Start number is required",
+                "hint": "Must be greater than 0"
+            },
+            "endAt": {
+                "label": "End At *",
+                "placeholder": "Enter end number",
+                "error": "End number is required",
+                "hint": "Must be greater than start number"
+            }
+        },
+        "buttons": {
+            "cancel": "Cancel",
+            "create": "Create Series",
+            "update": "Update Series",
+            "creating": "Creating...",
+            "updating": "Updating..."
+        },
+        "notifications": {
+            "validation": "Please fill in all required fields",
+            "createSuccess": "Interval number series created successfully",
+            "updateSuccess": "Interval number series updated successfully",
+            "createError": "Failed to create interval number series",
+            "updateError": "Failed to update interval number series"
+        }
+    }
+    },
+    "branchEmployees": {
+        "title": "Review and add employees",
+        "search": {
+        "placeholder": "Search employees...",
+        "availablePlaceholder": "Search available employees..."
+    },
+    "buttons": {
+        "addEmployee": "Add Employee",
+        "remove": "Remove",
+        "removing": "Removing...",
+        "close": "Close",
+        "add": "Add",
+        "adding": "Adding..."
+    },
+    "table": {
+        "headers": {
+            "employee": "Employee",
+            "role": "Role",
+            "email": "Email",
+            "actions": "Actions"
+        },
+        "noEmployees": "No employees found"
+    },
+    "role":{
+        "EMPLOYEE": "Employee",
+        "MANAGER": "Manager"
+    },
+    "modal": {
+        "title": "Add Employee to {branchName}",
+        "noResults": {
+            "title": "No available employees found",
+            "subtitle": "Try adjusting your search terms"
+        },
+        "confirmRemove": "Are you sure you want to remove this employee from the branch?"
+    },
+    "notifications": {
+        "addSuccess": "Employee added successfully",
+        "addError": "Failed to add employee",
+        "removeSuccess": "Employee removed successfully",
+        "removeError": "Failed to remove employee",
+        "confirmRemove": "Are you sure you want to remove this employee from the branch?"
+    }
+},
+"desks": {
+    "title": "Manage Desks",
+    "search": {
+        "placeholder": "Search desks..."
+    },
+    "addService": "Service",
+    "filters": {
+        "status": {
+            "label": "Status",
+            "all": "All Status",
+            "active": "Active",
+            "inactive": "Inactive"
+        }
+    },
+    "buttons": {
+        "addDesk": "Add Desk",
+        "assignServices": "Assign Services",
+        "edit": "Edit Desk",
+        "view": "View Desk",
+        "delete": "Delete Desk",
+        "desk": "Desk"
+    },
+    "table": {
+        "headers": {
+            "name": "Name",
+            "services": "Services",
+            "subServices": "Sub-Services",
+            "status": "Status",
+            "totalEmployees": "Total Employees",
+            "actions": "Actions"
+        },
+        "searchPlaceholder": "Search desks...",
+        "statusFilter": {
+            "all": "All Status",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "noServices": "No services assigned",
+        "noSubServices": "No sub-services assigned"
+    },
+    "tooltips": {
+        "edit": "Edit Desk",
+        "view": "View Desk",
+        "delete": "Delete Desk",
+        "assignServices": "Assign Services"
+    },
+    "deleteModal": {
+        "title": "Delete Desk",
+        "message": "Are you sure you want to delete {deskName}? This action cannot be undone.",
+        "confirmText": "Delete"
+    },
+    "notifications": {
+        "failedToLoadDesks": "Failed to load desks",
+        "failedToLoadServices": "Failed to load services",
+        "deleteSuccess": "Desk deleted successfully",
+        "deleteError": "Failed to delete desk",
+        "loadError": "Failed to load desks"
+    },
+    "pagination": {
+        "of": "of",
+        "itemsPerPage": "items per page"
+    },
+    "modal": {
+        "title": "Delete Desk",
+        "message": "Are you sure you want to delete {deskName}? This action cannot be undone.",
+        "confirmButton": "Delete"
+    },
+    "status": {
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive"
+    }
+},
+"deskForm": {
+    "title": {
+        "create": "Create New Desk",
+        "edit": "Edit Desk"
+    },
+    "tabs": {
+        "basic": "Basic Information",
+        "services": "Services"
+    },
+    "fields": {
+        "name": {
+            "label": "Name *",
+            "placeholder": "Enter desk name",
+            "error": "Name is required"
+        },
+        "description": {
+            "label": "Description",
+            "placeholder": "Enter description"
+        },
+        "status": {
+            "label": "Status",
+            "options": {
+                "active": "Active",
+                "inactive": "Inactive"
+            }
+        }
+    },
+    "services": {
+        "title": "Available Services",
+        "subServicesTitle": "Sub-Services",
+        "noSubServices": "No sub-services available",
+        "status": {
+            "active": "Active",
+            "inactive": "Inactive"
+        }
+    },
+    "subServices": {
+        "title": "Sub-Services",
+        "noSubServices": "No sub-services available"
+    },
+    "buttons": {
+        "cancel": "Cancel",
+        "create": "Create",
+        "update": "Update",
+        "creating": "Creating...",
+        "updating": "Updating..."
+    },
+    "notifications": {
+        "createSuccess": "Desk created successfully",
+        "createError": "Failed to create desk",
+        "updateSuccess": "Desk updated successfully",
+        "updateError": "Failed to update desk"
+    }
+},
+"deskDetail": {
+    "title": "Desk Details",
+    "tabs": {
+        "overview": "Overview",
+        "services": "Services",
+        "employees": "Employees"
+    },
+    "overview": {
+        "title": "Desk Information",
+        "fields": {
+            "name": "Name",
+            "status": "Status",
+            "totalEmployees": "Total Employees",
+            "totalServices": "Total Services",
+            "totalSubServices": "Total Sub-Services"
+        }
+    },
+    "services": {
+        "mainServices": {
+            "title": "Main Services",
+            "noServices": "No main services assigned"
+        },
+        "subServices": {
+            "title": "Sub-Services",
+            "noSubServices": "No sub-services assigned"
+        }
+    },
+    "employees": {
+        "title": "Assigned Employees",
+        "noEmployees": "No employees assigned to this desk",
+        "buttons": {
+            "assign": "Assign Employees",
+            "remove": "Remove"
+        },
+        "modal": {
+            "title": "Remove Employee",
+            "message": "Are you sure you want to remove {name} from this desk? This action cannot be undone.",
+            "confirmButton": "Remove",
+            "cancelButton": "Cancel"
+        }
+    },
+    "notifications": {
+        "employeeAssigned": "Employees assigned successfully",
+        "employeeAssignError": "Failed to assign employees",
+        "employeeRemoved": "Employee removed successfully",
+        "branchEmployeesError": "Failed to load branch employees",
+        "employeeRemoveError": "Failed to remove employee",
+        "loadError": "Failed to load desk details"
+    },
+    "noDesk": "No desk found",
+    "status": {
+        "ACTIVE": "ACTIVE",
+        "INACTIVE": "INACTIVE"
+    },
+    "modal": {
+        "title": "Remove Employee",
+        "message": "Are you sure you want to remove {name} from this desk? This action cannot be undone.",
+        "confirmButton": "Remove"
+    },
+    "buttons": {
+        "back": "Back to Desks"
+    }
+},
+"assignEmployees": {
+    "title": "Assign Employees to Desk",
+    "search": {
+        "placeholder": "Search employees..."
+    },
+    "noEmployees": "No available employees found",
+    "buttons": {
+        "cancel": "Cancel",
+        "assign": "Assign Selected",
+        "assigning": "Assigning..."
+    },
+    "modal": {
+        "title": "Remove Employee",
+        "message": "Are you sure you want to remove",
+        "confirmButton": "Remove"
+    }
+},
+"assignServices": {
+    "title": "Assign Services to {deskName}",
+    "tabs": {
+        "services": "Services",
+        "subServices": "Sub-Services"
+    },
+    "services": {
+        "selectSubServices": "(Select sub-services)",
+        "noServices": "No services available"
+    },
+    "subServices": {
+        "pleaseSelectServices": "Please select services first to see available sub-services",
+        "noSubServices": "No sub-services available for this service"
+    },
+    "buttons": {
+        "cancel": "Cancel",
+        "save": "Save Changes",
+        "saving": "Saving..."
+    },
+    "validation": {
+        "selectService": "Please select at least one service"
+    },
+    "notifications": {
+        "success": "Services assigned successfully",
+        "error": "Failed to assign services",
+        "loadError": "Failed to load services"
+    },
+    "status": {
+        "ACTIVE": "ACTIVE",
+        "INACTIVE": "INACTIVE"
+    }
+},
+"services": {
+    "title": "Review or delete Services",
+    "table": {
+        "headers": {
+            "name": "Service Name",
+            "subServices": "Sub-Services",
+            "status": "Status",
+            "actions": "Actions"
+        },
+        "noServices": "No services assigned to this branch yet"
+    },
+    "buttons": {
+        "remove": "Remove",
+        "back": "Back"
+    },
+    "modal": {
+        "title": "Remove Service",
+        "message": "Are you sure you want to remove {serviceName} from this branch?",
+        "confirmButton": "Remove",
+        "cancelButton": "Cancel"
+    },
+    "notifications": {
+        "removeSuccess": "Service removed successfully",
+        "removeError": "Failed to remove service",
+        "loadError": "Failed to load branch services"
+    },
+    "status": {
+        "ACTIVE": "ACTIVE",
+        "INACTIVE": "INACTIVE"
+    }
+},
+"numerators": {
+    "title": "Manage Numerators",
+    "search": {
+        "placeholder": "Search numerators..."
+    },
+    "table": {
+        "headers": {
+            "name": "Name",
+            "serialNo": "Serial No",
+            "status": "Status",
+            "actions": "Actions"
+        },
+        "noNumerators": "No numerators found"
+    },
+    "buttons": {
+        "add": "Add New Numerator",
+        "edit": "Edit Numerator",
+        "delete": "Delete Numerator",
+        "cancel": "Cancel",
+        "create": "Add Numerator",
+        "update": "Update Numerator",
+        "creating": "Creating...",
+        "updating": "Updating..."
+    },
+    "form": {
+        "title": {
+            "add": "Add New Numerator",
+            "edit": "Edit Numerator"
+        },
+        "fields": {
+            "name": {
+                "label": "Name",
+                "placeholder": "Enter numerator name"
+            },
+            "serialNo": {
+                "label": "Serial Number",
+                "placeholder": "Enter serial number"
+            },
+            "status": {
+                "label": "Status",
+                "options": {
+                    "active": "Active",
+                    "inactive": "Inactive"
+                }
+            }
+        }
+    },
+    "modal": {
+        "title": "Delete Numerator",
+        "message": "Are you sure you want to delete this numerator? This action cannot be undone.",
+        "confirmButton": "Delete"
+    },
+    "notifications": {
+        "createSuccess": "Numerator added successfully",
+        "createError": "Failed to add numerator",
+        "updateSuccess": "Numerator updated successfully",
+        "updateError": "Failed to update numerator",
+        "deleteSuccess": "Numerator deleted successfully",
+        "deleteError": "Failed to delete numerator",
+        "loadError": "Failed to fetch numerators",
+        "duplicateSerial": "A numerator with this serial number already exists in this branch",
+        "unauthorized": "You are not authorized to view this page."
+    },
+    "status": {
+        "active": "ACTIVE",
+        "inactive": "INACTIVE"
+    }
+},
+"numeratorsList": {
+    "title": "Manage and review numerator data",
+    "search": {
+        "placeholder": "Search numerators by serial or name..."
+    },
+    "noNumerators": "No numerators found",
+    "numerator": {
+        "serialNo": "Serial No: {number}",
+        "status": {
+            "ACTIVE": "ACTIVE",
+            "INACTIVE": "INACTIVE"
+        }
+    },
+    "buttons": {
+        "generateToken": "Generate Interval Number"
+    },
+    "notifications": {
+        "fetchError": "Failed to fetch numerators",
+        "branchError": "Failed to fetch branches"
+    }
+},
+"adminServices": {
+    "title": "Manage and review available services",
+    "search": {
+        "placeholder": "Search by name, email or related info..."
+    },
+    "filters": {
+        "status": {
+            "label": "Status Filter",
+            "all": "All Status",
+            "active": "Active",
+            "inactive": "Inactive"
+        }
+    },
+    "summary": {
+        "showing": "Showing {count} of {total} services"
+    },
+    "table": {
+        "headers": {
+            "name": "Name",
+            "subServices": "Sub-Services",
+            "branches": "Branches",
+            "status": "Status",
+            "actions": "Actions"
+        },
+        "noServices": "No services found. Create your first service!"
+    },
+    "buttons": {
+        "new": "New Service",
+        "edit": "Edit",
+        "delete": "Delete",
+        "subServices": "Sub-Services"
+    },
+    "modal": {
+        "title": "Delete Service",
+        "message": "Are you sure you want to delete \"{serviceName}\"? This action cannot be undone and will also delete all associated sub-services.",
+        "confirmButton": "Delete",
+        "cancelButton": "Cancel"
+    },
+    "notifications": {
+        "deleteSuccess": "Service deleted successfully",
+        "deleteError": "Failed to delete service",
+        "loadError": "Failed to load services"
+    },
+    "pagination": {
+        "itemsPerPage": "items per page",
+        "page": "Page {current} of {total}"
+    },
+    "status": {
+        "ACTIVE": "ACTIVE",
+        "INACTIVE": "INACTIVE"
+    }
+},
+"serviceForm": {
+    "title": {
+        "create": "Create New Service",
+        "edit": "Edit Service"
+    },
+    "sections": {
+        "basic": {
+            "title": "Basic Information",
+            "name": {
+                "label": "Service Name",
+                "placeholder": "Enter service name",
+                "required": "Service name is required"
+            },
+            "status": {
+                "label": "Status",
+                "active": "Active",
+                "inactive": "Inactive"
+            }
+        },
+        "branches": {
+            "title": "Branch Selection",
+            "noBranches": "No branches available",
+            "error": "At least one branch must be selected"
+        },
+        "subServices": {
+            "title": "Sub-Services",
+            "add": "Add Sub-Service",
+            "placeholder": "Enter sub-service name",
+            "required": "Sub-service name is required"
+        }
+    },
+    "buttons": {
+        "cancel": "Cancel",
+        "create": "Create Service",
+        "update": "Update Service",
+        "creating": "Creating...",
+        "updating": "Updating..."
+    },
+    "notifications": {
+        "validation": "Please fill the form correctly",
+        "createSuccess": "Service created successfully",
+        "createError": "Failed to create service",
+        "updateSuccess": "Service updated successfully",
+        "updateError": "Failed to update service",
+        "loadError": "Failed to load service",
+        "branchLoadError": "Failed to load branches",
+        "invalidBranchesData": "Invalid branches data format",
+        "serviceNotFound": "Service not found"
+    }
+},
+"subServices": {
+    "title": "Sub-Services for {serviceName}",
+    "search": {
+        "placeholder": "Search by name..."
+    },
+    "filters": {
+        "status": {
+            "label": "Status Filter",
+            "all": "All Status",
+            "active": "Active",
+            "inactive": "Inactive"
+        }
+    },
+    "summary": {
+        "showing": "Showing {count} of {total} sub-services"
+    },
+    "table": {
+        "headers": {
+            "name": "Name",
+            "status": "Status"
+        },
+        "noSubServices": "No sub-services found. Click Edit to add sub-services."
+    },
+    "buttons": {
+        "edit": "Edit Service & Sub-Services"
+    },
+    "pagination": {
+        "itemsPerPage": "items per page",
+        "page": "Page {current} of {total}"
+    },
+    "status": {
+        "ACTIVE": "ACTIVE",
+        "INACTIVE": "INACTIVE"
+    },
+    "notifications": {
+        "loadError": "Failed to load service details"
+    }
+},
+"displayScreen": {
+    "title": "Display Screens",
+    "subtitle": "Select a branch to view its display screen",
+    "branchCard": {
+        "status": {
+            "ACTIVE": "ACTIVE",
+            "INACTIVE": "INACTIVE"
+        }
+    },
+    "noBranches": "No branches available",
+    "notifications": {
+        "loadError": "Failed to load branches"
+    }
+},
+"displayBoard": {
+    "title": "Interval Number Board",
+    "subtitle": "Current Status",
+    "loading": "Loading Interval Numbers...",
+    "footer": "Please wait for your interval number to be called",
+    "desk": {
+        "default": "Desk {number}",
+        "noTokens": "No active interval numbers"
+    },
+    "token": {
+        "status": {
+            "SERVING": "SERVING",
+            "WAITING": "WAITING",
+            "COMPLETED": "COMPLETED",
+            "CALLED": "CALLED",
+            "MISSED": "MISSED",
+            "PENDING": "PENDING",
+            "CANCELLED": "CANCELLED",
+            "SKIPPED": "SKIPPED",
+            "ON_HOLD": "ON HOLD"
+        }
+    },
+    "notifications": {
+        "connectionError": "Failed to connect to display board",
+        "loadError": "Failed to load interval numbers"
+    }
+},
+"deskScreens": {
+    "title": "Desk Screens",
+    "subtitle": {
+        "manager": "Manage and monitor your branch desk screens",
+        "admin": "Manage and monitor desk screens across all branches"
+    },
+    "stats": {
+        "activeDesks": "Total Active Desks"
+    },
+    "filters": {
+        "search": "Search branches...",
+        "cities": {
+            "all": "All Cities"
+        },
+        "status": {
+            "all": "All Status",
+            "active": "Active",
+            "inactive": "Inactive"
+        }
+    },
+    "branch": {
+        "activeDesks": "Active Desks",
+        "noDesks": "No active desks in this branch",
+        "status": {
+            "ACTIVE": "ACTIVE",
+            "INACTIVE": "INACTIVE"
+        }
+    },
+    "noBranches": {
+        "assigned": "No branch assigned to you",
+        "filtered": "No branches found matching your criteria"
+    },
+    "notifications": {
+        "fetchError": "Failed to fetch branches",
+        "noBranchesAssigned": "No branches assigned to you"
+    }
+},
+"deskScreen": {
+    "loading": "Loading Desk Data...",
+    "error": "Error: {message}",
+    "noEmployees": {
+        "title": "No Employees Assigned",
+        "description": "This desk currently has no employees assigned to it."
+    },
+    "table": {
+        "headers": {
+            "employee": "Employee",
+            "status": "Status",
+            "currentToken": "Current Interval"
+        }
+    },
+    "employeeStatus": {
+        "onBreak": {
+            "text": "On Break",
+            "icon": "☕"
+        },
+        "active": {
+            "text": "Active",
+            "icon": "💻"
+        },
+        "inactive": {
+            "text": "N/A",
+            "icon": "⏸️"
+        }
+    },
+    "token": {
+        "noActive": "No active interval number"
+    },
+    "lastUpdated": "Last updated: {time}",
+    "notifications": {
+        "fetchError": "Failed to fetch desk data",
+        "socketConnected": "Connected to socket server",
+        "socketUpdate": "Received desk update"
+    }
+},
+"tokenGeneration": {
+    "title": "Queue Soft",
+    "loading": "Loading services...",
+    "noServices": "No services available",
+    "backButton": "Back to Services",
+    "subServiceTitle": "Select Sub-service for {serviceName}",
+    "buttons": {
+        "generate": {
+            "default": "Print Interval Number",
+            "generating": "Printing..."
+        },
+        "print": "Print Ticket",
+        "close": "Close"
+    },
+    "modal": {
+        "tokenNumber": "Your Interval Number",
+        "details": {
+            "service": "Service",
+            "subService": "Sub-Service",
+            "counter": "Counter",
+            "staff": "Staff Member"
+        },
+        "footer": "Please keep this interval number for your reference"
+    },
+    "printTicket": {
+        "title": "Queue Soft",
+        "tokenNo": "Interval Number:",
+        "details": {
+            "service": "Service:",
+            "type": "Type:",
+            "counter": "Counter:",
+            "staff": "Staff:"
+        },
+        "footer": "Please keep this interval number for reference"
+    },
+    "notifications": {
+        "selectBoth": "Please select both service and sub-service",
+        "generateError": "Failed to print interval number",
+        "loadError": "Failed to load services",
+        "invalidData": "Invalid services data received"
+    }
+},
+"usersPage": {
+    "title": {
+        "superadmin": "Manage Users",
+        "manager": "Manage Employees"
+    },
+    "filters": {
+        "search": "Search users by name, email or branch...",
+        "role": {
+            "all": "All Roles",
+            "ADMIN": "Admin",
+            "MANAGER": "Manager",
+            "EMPLOYEE": "Employee",
+            "SUPERADMIN": "Super Admin"
+        },
+        "branch": {
+            "all": "All Branches",
+            "loading": "Loading branches..."
+        },
+        "status": {
+            "all": "All Status",
+            "ACTIVE": "Active",
+            "INACTIVE": "Inactive"
+        }
+    },
+    "table": {
+        "headers": {
+            "name": "Name",
+            "email": "Email",
+            "role": "Role",
+            "branch": "Branch",
+            "status": "Status",
+            "actions": "Actions"
+        },
+        "options": {
+            "role": {
+                "EMPLOYEE": "Employee",
+                "MANAGER": "Manager"
+            }
+        },
+        "noUsers": "No users found",
+        "actions": {
+            "edit": "Edit",
+            "delete": "Delete",
+            "viewLogs": "View Logs"
+
+        },
+        "status": {
+            "ACTIVE": "Active",
+            "INACTIVE": "Inactive"
+        },
+        "notAssigned":"Not Assigned"
+
+    },
+    "pagination": {
+        "showing": "Showing {start} to {end} of {total} ",
+        "itemsPerPage": "Items per page",
+        "of": "of",
+        "user": "users",
+        "employee": "employees"
+    },
+    "modal": {
+        "add": {
+            "title": "Add New User",
+            "success": "User created successfully"
+        },
+        "edit": {
+            "title": "Edit User",
+            "success": "User updated successfully"
+        },
+        "delete": {
+            "title": "Delete User",
+            "message": "Are you sure you want to delete {userName}?",
+            "description": "This action cannot be undone.",
+            "confirm": "Yes, delete",
+            "cancel": "Cancel",
+            "success": "User deleted successfully"
+        }
+    },
+    
+    "form": {
+        "labels": {
+            "fullName": "Full Name",
+            "email": "Email Address",
+            "password": "Password",
+            "role": "Role",
+            "branch": "Branch",
+            "status": "Status"
+        },
+        "placeholders": {
+            "fullName": "Enter full name",
+            "email": "Enter email address",
+            "password": "Enter password",
+            "role": "Select role",
+            "branch": "Select branch",
+            "status": "Select status"
+        },
+        "validation": {
+            "required": {
+                "fullName": "Full name is required",
+                "email": "Email is required",
+                "password": "Password is required",
+                "role": "Role is required",
+                "branch": "Branch is required"
+            },
+            "invalid": {
+                "email": "Invalid email address"
+            },
+            "minLength": {
+                "password": "Password must be at least 6 characters"
+            }
+        },
+        "buttons": {
+            "addUser": "Add User",
+            "addEmployee": "Add Employee",
+            "save": "Save Changes",
+            "cancel": "Cancel"
+        }
+    },
+    "notifications": {
+        "fetchError": "Failed to fetch users",
+        "branchError": "Failed to fetch branches",
+        "createError": "Failed to create user",
+        "updateError": "Failed to update user",
+        "deleteError": "Failed to delete user",
+        "unauthorized": "You are not authorized to perform this action"
+    }
+},
+"userModal": {
+    "title": {
+        "edit": "Edit Employee",
+        "add": "Add New Employee"
+    },
+    "labels": {
+        "fullName": "Full Name",
+        "email": "Email",
+        "password": "Password",
+        "passwordOptional": "(Optional)",
+        "role": "Role",
+        "status": "Status"
+
+    },
+    "placeholders": {
+        "fullName": "Enter full name",
+        "email": "Enter email address",
+        "password": "Enter password",
+        "passwordUpdate": "Enter password (Optional)"
+    },
+    "validation": {
+        "fullName": "Full name is required",
+        "email": {
+            "required": "Email is required",
+            "invalid": "Invalid email address"
+        },
+        "password": {
+            "required": "Password is required",
+            "minLength": "Password must be at least 6 characters"
+        }
+    },
+    "options": {
+        "role": {
+            "EMPLOYEE": "Employee",
+            "MANAGER": "Manager"
+        },
+        "status": {
+            "ACTIVE": "Active",
+            "INACTIVE": "Inactive"
+        }
+    },
+    "buttons": {
+        "cancel": "Cancel",
+        "update": "Update Employee",
+        "create": "Create Employee",
+        "updating": "Updating...",
+        "creating": "Creating..."
+    }
+},
+"userLogs": {
+    "title": "Activity Logs",
+    "filters": {
+        "title": "Filters",
+        "dateRange": {
+            "label": "Date Range",
+            "options": {
+                "today": "Today",
+                "yesterday": "Yesterday",
+                "lastWeek": "Last 7 Days",
+                "lastMonth": "Last 30 Days",
+                "custom": "Custom Range"
+            }
+        },
+        "activityType": {
+            "label": "Activity Type",
+            "options": {
+                "all": "All Activities",
+                "BREAK_START": "Break Start",
+                "BREAK_END": "Break End",
+                "SHIFT_START": "Shift Start",
+                "SHIFT_END": "Shift End",
+                "TOKEN_COMPLETE": "Interval# Complete",
+                "WORK_START": "Work Start",
+                "WORK_END": "Work End"
+            }
+        },
+        "sortOrder": {
+            "label": "Sort Order",
+            "newest": "Newest First",
+            "oldest": "Oldest First"
+        }
+    },
+    "summary": {
+        "workTime": {
+            "title": "Total Work Time",
+            "empty": "0"
+        },
+        "breakTime": {
+            "title": "Total Break Time",
+            "empty": "0"
+        },
+        "breakCount": {
+            "title": "Break Count",
+            "empty": "0"
+        },
+        "tokensCompleted": {
+            "title": "Intervals Completed",
+            "empty": "0"
+        },
+        "currentStatus": {
+            "title": "Current Status",
+            "states": {
+                "ONLINE": "Online",
+                "OFFLINE": "Offline",
+                "BREAK": "Break",
+                "WORKING": "Working"
+            }
+        }
+    },
+    "table": {
+        "headers": {
+            "date": "Date",
+            "time": "Time",
+            "activity": "Activity"
+        },
+        "empty": "No logs found for this date",
+        "loading": "Loading logs..."
+    }
+},
+"employeeDashboard": {
+    "loading": "Loading user data...",
+    "error": "Error: {error}",
+    "loginPrompt": "Please log in to continue",
+    "welcome": "Welcome, {name}",
+    "info": {
+        "desk": "Desk: {name}",
+        "branch": "Branch: {name}",
+        "status": {
+            "label": "Status: {status}",
+            "working": "Working",
+            "onBreak": "On Break",
+            "notWorking": "Not Working"
+        },
+        "notAssigned": "Not Assigned"
+    },
+    "warnings": {
+        "noDesk": "You are not assigned to any desk. Please contact your administrator."
+    },
+    "stats": {
+        "currentToken": {
+            "title": "Current Interval#",
+            "empty": "No active interval number"
+        },
+        "nextToken": {
+            "title": "Next Interval#",
+            "empty": "No interval numbers in queue"
+        },
+        "queueLength": {
+            "title": "Queue Length"
+        },
+        "completedToday": {
+            "title": "Completed Today"
+        }
+    },
+    "actions": {
+        "startWork": "Start Work",
+        "endWork": "End Work",
+        "startBreak": "Start Break",
+        "endBreak": "End Break",
+        "nextToken": "Next Interval#",
+        "completeAndNext": "Complete & Next",
+        "completeToken": "Complete Interval#"
+    },
+    "confirmations": {
+        "startWork": {
+            "title": "Confirm Start Work",
+            "message": "Are you ready to start your work day?"
+        },
+        "endWork": {
+            "title": "Confirm End Work",
+            "message": "Are you sure you want to end your work day?"
+        },
+        "startBreak": {
+            "title": "Confirm Break",
+            "message": "Are you sure you want to start your break? This will pause your work."
+        },
+        "endBreak": {
+            "title": "Confirm End Break",
+            "message": "Are you ready to return from your break?"
+        }
+    },
+    "messages": {
+        "onBreak": "You are currently on break. Please end your break to resume work.",
+        "success": {
+            "workStarted": "Work started successfully",
+            "workEnded": "Work ended successfully",
+            "breakStarted": "Break started successfully",
+            "breakEnded": "Break ended successfully",
+            "tokenCompleted": "Interval Number completed successfully",
+            "nextToken": "Now serving next interval number"
+        },
+        "error": {
+            "userNotFound": "User not found",
+            "failedToLoad": "Failed to load interval numbers",
+            "failedToServe": "Failed to serve next interval number",
+            "failedToComplete": "Failed to complete interval number",
+            "failedToStartWork": "Failed to start work",
+            "failedToEndWork": "Failed to end work",
+            "failedToStartBreak": "Failed to start break",
+            "failedToEndBreak": "Failed to end break"
+        }
+    },
+    "dialog": {
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+    }
+},
+"login": {
+    "title": "Sign in to your account",
+    "subtitle": "Welcome back! Please enter your details",
+    "form": {
+        "email": {
+            "label": "Email",
+            "placeholder": "Enter your email",
+            "error": {
+                "required": "Email is required",
+                "invalid": "Invalid email format"
+            }
+        },
+        "password": {
+            "label": "Password",
+            "placeholder": "Enter your password",
+            "error": {
+                "required": "Password is required",
+                "minLength": "Password must be at least 6 characters"
+            }
+        },
+        "forgotPassword": "Forgot your password?",
+        "submit": {
+            "default": "Sign in",
+            "loading": "Signing in..."
+        }
+    },
+    "notifications": {
+        "success": "Successfully logged in",
+        "error": {
+            "default": "Failed to login",
+            "invalidCredentials": "Invalid email or password",
+            "userInactive": "Your account is inactive",
+            "networkError": "Network error occurred"
+        }
+    }
+}
+}

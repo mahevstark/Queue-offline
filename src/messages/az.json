@@ -1,0 +1,1442 @@
+{
+  "metadata": {
+    "title": "Yumşaq növbə | Növbə İdarəetmə Sistemi",
+    "description": "Müştərilər növbəsini, işçilərini, əməkdaşlarını, filiaları və ya digər məlumatları mükafatlandırılıqla idarə etmək üçün lazımi olan təminatı təqdim edir!"
+  },
+  "sidebar": {
+    "title": "Növbə Yumşaq",
+    "navigation": {
+      "dashboard": "İdarə paneli",
+      "users": "İstifadəçilər",
+      "employees": "Əməkdaşlar",
+      "services": "Xidmətlər",
+      "displayScreen": "Ekran Görüntüsü",
+      "deskScreens": "Masa Ekranları",
+      "employeeDashboard": "Əməkdaş Paneli",
+      "numerators": "Nömrələyicilər",
+      "branches": "Filiallar",
+      "myBranch": "Mənim Filialım"
+    },
+    "logout": "Çıxış",
+    "userRole": {
+      "MANAGER": "Menecer",
+      "SUPERADMIN": "Super Admin",
+      "EMPLOYEE": "Əməkdaş"
+    }
+  },
+  "dashboard": {
+    "pageTitle": "Performans və fəaliyyətləri izləyin",
+    "stats": {
+      "todayGathering": "Bugünkü Toplanma",
+      "pendingAppointments": "Gözləyən Görüşlər",
+      "dailyAverage": "Gündəlik Ortalama",
+      "averageWaitingTime": "Ortalama Gözləmə Müddəti",
+      "noData": "Məlumat yoxdur"
+    },
+    "branchStats": {
+      "waitingCustomers": "Gözləyən Müştərilər",
+      "activeDesks": "Aktiv Masalar",
+      "totalEmployees": "Ümumi İşçilər",
+      "onlineWorkers": "Onlayn İşçilər",
+      "workersOnBreak": "Fasilədə Olan İşçilər",
+      "activeNumerators": "Aktiv Nömrələyicilər",
+      "totalNumerators": "Ümumi Nömrələyicilər"
+    },
+    "charts": {
+      "dailyTokens": {
+        "title": "Gündəlik Interval Number Paylanması",
+        "loading": "Qrafik məlumatları yüklənir...",
+        "label": "Gündəlik Interval Numberlər",
+        "totalTokens": "Ümumi Interval Numberlər"
+      },
+      "serviceDistribution": {
+        "title": "Xidmət Paylanması",
+        "loading": "Qrafik məlumatları yüklənir...",
+        "noData": "Xidmət məlumatı mövcud deyil"
+      },
+      "peakHours": {
+        "title": "Pik Saatların Analizi",
+        "timeframes": {
+          "week": "Həftə",
+          "month": "Ay",
+          "year": "İl"
+        },
+        "label": "Interval Number Sayı",
+        "axisLabels": {
+          "tokens": "Verilmiş Interval Number Sayı",
+          "time": "Günün Saatı"
+        },
+        "tooltip": "interval number verildi",
+        "description": {
+          "line1": "Bu qrafik gün ərzində interval number verilməsinin paylanmasını göstərir.",
+          "line2": "Uzun çubuqlar həmin saatlarda daha yüksək aktivliyi göstərir."
+        }
+      },
+      "doughnut": {
+        "tokens": "Interval Numberlər",
+        "percentage": "Faiz"
+      },
+      "tokenStatusOptions": {
+          "count": "Say",
+        "percentage": "Faiz"
+      },
+      "busyHours": {
+        "label": "Interval Number Sayı"
+      },
+      "busyHoursTooltip": {
+        "token":"interval number",
+        "issuedBetween": "verildi"
+      },
+      "tokenStatusDistribution": {
+        "title": "Interval Number statusunun paylanması",
+        "noData": "Interval Number məlumatı mövcud deyil",
+        "loading": "Qrafik məlumatları yüklənir...",
+        "labels": {
+          "COMPLETED": "Tamamlanıb",
+          "PENDING": "Gözləyən",
+          "SERVING": "İşə başladı"
+        }
+      }
+    },
+    "employeeActivities": {
+      "title": "Bugünkü İşçi Fəaliyyətləri",
+      "search": {
+        "placeholder": "İşçi, masa axtar..."
+      },
+      "logs": {
+        "employeeCounter": "İşçi / Masa",
+        "status": "Status",
+        "currentToken": "Cari Interval#",
+        "time": "Vaxt"
+      },
+      "noData": {
+        "noActivities": "Bugün üçün fəaliyyət qeydi yoxdur",
+        "noMatching": "Uyğun fəaliyyət tapılmadı",
+        "noActiveToken": "Aktiv interval number yoxdur"
+      },
+      "logTypes": {
+        "WORK_START": "İşə Başladı",
+        "WORK_END": "İşi Bitirdi",
+        "BREAK_START": "Fasiləyə Başladı",
+        "BREAK_END": "Fasiləni Bitirdi"
+      }
+    }
+  },
+  "branches": {
+    "pageTitle": {
+      "superadmin": "Bütün filialları idarə edin və nəzərdən keçirin",
+      "manager": "Filial məlumatlarını idarə edin və baxın"
+    },
+    "actions": {
+      "addBranch": "Filial Əlavə Et",
+      "delete": "Filialı Sil",
+      "edit": "Düzəliş Et",
+      "services": "Xidmətlər",
+      "desks": "Masalar",
+      "users": "İstifadəçilər",
+      "tokenSeries": "Interval Seriyaları",
+      "viewTokenSeries": "Interval Seriyalarını",
+      "manageNumerators": "Nömrələyiciləri İdarə Et",
+      "employees": "İşçilər",
+      "viewEmployees": "İşçilərini Bax",
+      "viewDesks": "Masaları Bax",
+      "viewServices": "Xidmətləri Bax"
+    },
+    "quickActions": "Tez Əməliyyatlar",
+    "table": {
+      "allStatus": "Bütün Statuslar",
+      "active": "Aktiv",
+      "inactive": "Deaktiv",
+      "name": "Ad",
+      "address": "Ünvan",
+      "contact": "Əlaqə",
+      "managedBy": "İdarə Edən",
+      "status": "Status",
+      "actions": "Əməliyyatlar",
+      "noManager": "Menecer təyin edilməyib"
+    },
+    "branchDetails": {
+      "city": "Şəhər",
+      "state": "Əyalət",
+      "zip": "Poçt Kodu",
+      "address": "Ünvan",
+      "contact": "Əlaqə",
+      "status": "status",
+      "managedBy": "İdarə Edən",
+      "managerEmail": "Menecer E-poçtu"
+    },
+    "searchPlaceholder": "Filial axtar...",
+    "deleteModal": {
+      "title": "Filialı Sil",
+      "message": "{branchName} filialını silmək istədiyinizə əminsiniz? Bu əməliyyat geri qaytarıla bilməz.",
+      "confirmText": "Sil"
+    },
+    "pagination": {
+      "of": "/",
+      "itemsPerPage": "səhifədəki məlumatlar"
+    },
+    "notifications": {
+      "loadError": "Filial yüklənmədi",
+      "deleteSuccess": "Filial uğurla silindi",
+      "deleteError": "Filialı silmək alınmadı"
+    },
+    "unauthorized": "Bu səhifəni görmək üçün icazəniz yoxdur.",
+    "noBranchesFound": "Filial yoxdur.",
+    "status": {
+      "ACTIVE": "Aktiv",
+      "INACTIVE": "Deaktiv"
+    }
+  },
+  "branchForm": {
+    "title": {
+      "create": "Filial Yarat",
+      "edit": "Filialı Düzənlə"
+    },
+    "fields": {
+      "name": {
+        "label": "Filial Adı ",
+        "placeholder": "Filial adını daxil edin",
+        "error": "Filial adı tələb olunur"
+      },
+      "address": {
+        "label": "Ünvan ",
+        "placeholder": "Küçə ünvanını daxil edin",
+        "error": "Ünvan tələb olunur"
+      },
+      "city": {
+        "label": "Şəhər",
+        "placeholder": "Şəhəri daxil edin",
+        "error": "Şəhər tələb olunur"
+      },
+      "state": {
+        "label": "Əyalət",
+        "placeholder": "Əyaləti daxil edin",
+        "error": "Əyalət tələb olunur"
+      },
+      "zipCode": {
+        "label": "Poçt Kodu ",
+        "placeholder": "Poçt kodunu daxil edin",
+        "error": {
+          "required": "Poçt kodu tələb olunur",
+          "invalid": "Yanlış poçt kodu formatı"
+        }
+      },
+      "phone": {
+        "label": "Telefon Nömrəsi ",
+        "placeholder": "Telefon nömrəsini daxil edin",
+        "error": {
+          "required": "Telefon nömrəsi tələb olunur",
+          "invalid": "Yanlış telefon nömrəsi formatı"
+        }
+      },
+      "manager": {
+        "label": "Filial Meneceri",
+        "placeholder": "Menecer seçin",
+        "alreadyAssigned": "Artıq başqa filiala təyin edilib",
+        "note": "Menecerlər filial yaradıldıqdan sonra da təyin edilə bilər."
+      }
+    },
+    "buttons": {
+      "cancel": "Ləğv Et",
+      "create": "Filial Yarat",
+      "update": "Filialı Yenilə",
+      "creating": "Yaradılır...",
+      "updating": "Yenilənir..."
+    },
+    "notifications": {
+      "validateForm": "Zəhmət olmasa formu tamamlayın",
+      "createLoading": "Filial yaradılır...",
+      "updateLoading": "Filial yenilənir...",
+      "createSuccess": "Filial uğurla yaradıldı",
+      "loadManagersError": "Menecer yüklənmədi",
+      "updateSuccess": "Filial uğurla yeniləndi",
+      "error": "Filialı {mode} etmək alınmadı"
+    }
+  },
+  "tokenSeries": {
+    "title": "Interval Number Seriyaları İdarəetməsi",
+    "stats": {
+      "servicesAvailable": "{count} xidmət mövcuddur"
+    },
+    "buttons": {
+      "addNew": "Yeni Seriya Əlavə Et",
+      "activate": "Aktivləşdir",
+      "deactivate": "Deaktivləşdir",
+      "edit": "Düzəliş Et",
+      "delete": "Sil",
+      "createFirst": "İlk Seriyanı Yarat",
+      "tryAgain": "Yenidən Cəhd Et"
+    },
+    "table": {
+      "headers": {
+        "service": "Xidmət",
+        "prefix": "Prefiks",
+        "currentNumber": "Cari Nömrə",
+        "range": "Aralıq",
+        "status": "Status",
+        "actions": "Əməliyyatlar"
+      }
+    },
+    "emptyState": {
+      "title": "Interval Number Seriyası Tapılmadı",
+      "withServices": "İlk interval number seriyanızı yaratmaqla başlayın.",
+      "noServices": "Interval number seriyaları yaratmazdan əvvəl xidmətlər əlavə edin."
+    },
+    "form": {
+      "title": {
+        "create": "Yeni Interval Number Seriyası Yarat",
+        "edit": "Interval Number Seriyasını Düzənlə"
+      },
+      "fields": {
+        "service": {
+          "label": "Xidmət",
+          "placeholder": "Xidmət seçin"
+        },
+        "prefix": {
+          "label": "Prefiks",
+          "placeholder": "Prefiks daxil edin (məs., A, B, C)"
+        },
+        "range": {
+          "start": {
+            "label": "Başlanğıc",
+            "placeholder": "Başlanğıc nömrəsi daxil edin"
+          },
+          "end": {
+            "label": "Son",
+            "placeholder": "Son nömrəni daxil edin"
+          }
+        }
+      }
+    },
+    "notifications": {
+      "validation": "Bütün tələb olunan sahələri doldurun",
+      "createSuccess": "Interval number seriyası uğurla yaradıldı",
+      "updateSuccess": "Interval number seriyası uğurla yeniləndi",
+      "createError": "Interval number seriyası yaradılma alınmadı",
+      "updateError": "Interval number seriyasını yeniləmək alınmadı",
+      "deleteConfirm": "Bu interval number seriyasını silmək istədiyinizə əminsiniz?",
+      "deleteSuccess": "Interval number seriyası uğurla silindi",
+      "deleteError": "Interval number seriyasını silmək alınmadı",
+      "statusToggle": "Interval number seriyası {status} uğurla",
+      "statusToggleError": "Statusu yeniləmək alınmadı",
+      "loadError": "Məlumatları yükləmək alınmadı"
+    },
+    "error": {
+      "title": "Xəta ({status})",
+      "defaultTitle": "Xəta",
+      "unexpectedError": "Gözlənilməz xəta baş verdi"
+    },
+    "tokenSeriesForm": {
+      "title": {
+        "create": "Yeni Interval Number Seriyası Yarat",
+        "edit": "Interval Number Seriyasını Düzənlə"
+      },
+      "fields": {
+        "service": {
+          "label": "Xidmət *",
+          "placeholder": "Xidmət seçin",
+          "error": "Xidmət seçimi tələb olunur"
+        },
+        "prefix": {
+          "label": "Prefiks *",
+          "placeholder": "məs., A, B, LON",
+          "error": "Prefiks tələb olunur",
+          "hint": "Maksimum 3 simvol"
+        },
+        "startFrom": {
+          "label": "Başlanğıc *",
+          "placeholder": "Başlanğıc nömrəsini daxil edin",
+          "error": "Başlanğıc nömrəsi tələb olunur",
+          "hint": "0-dan böyük olmalıdır"
+        },
+        "endAt": {
+          "label": "Son *",
+          "placeholder": "Son nömrəni daxil edin",
+          "error": "Son nömrə tələb olunur",
+          "hint": "Başlanğıc nömrəsindən böyük olmalıdır"
+        }
+      },
+      "buttons": {
+        "cancel": "Ləğv Et",
+        "create": "Seriya Yarat",
+        "update": "Seriyanı Yenilə",
+        "creating": "Yaradılır...",
+        "updating": "Yenilənir..."
+      },
+      "notifications": {
+        "validation": "Bütün tələb olunan sahələri doldurun",
+        "createSuccess": "Interval number seriyası uğurla yaradıldı",
+        "updateSuccess": "Interval number seriyası uğurla yeniləndi",
+        "createError": "Interval number seriyası yaratmaq alınmadı",
+        "updateError": "Interval number seriyasını yeniləmək alınmadı"
+      }
+    }
+  },
+  "branchEmployees": {
+    "title": "İşçiləri nəzərdən keçir və əlavə et",
+    "search": {
+      "placeholder": "İşçiləri axtar...",
+      "availablePlaceholder": "Mövcud işçiləri axtar..."
+    },
+    "buttons": {
+      "addEmployee": "İşçi Əlavə Et",
+      "remove": "çıxarın",
+      "removing": "Çıxarılır...",
+      "close": "Bağla",
+      "add": "Əlavə Et",
+      "adding": "Əlavə Edilir..."
+    },
+    "table": {
+      "headers": {
+        "employee": "İşçi",
+        "role": "Vəzifə",
+        "email": "E-poçt",
+        "actions": "tədbirlər"
+      },
+      "noEmployees": "İşçi tapılmadı"
+    },
+    "role":{
+        "EMPLOYEE": "İşçi",
+        "MANAGER": "Menecer"
+    },
+    "modal": {
+      "title": "{branchName} filialına işçi əlavə et",
+      "noResults": {
+        "title": "Mövcud işçi tapılmadı",
+        "subtitle": "Axtarış sözlərini dəyişdirməyi sınayın"
+      },
+      "confirmRemove": "Bu işçini filialdan çıxarmaq istədiyinizə əminsiniz?"
+    },
+    "notifications": {
+      "addSuccess": "İşçi uğurla əlavə edildi",
+      "addError": "İşçi əlavə etmək alınmadı",
+      "removeSuccess": "İşçi uğurla çıxarıldı",
+      "removeError": "İşçini çıxarmaq alınmadı",
+      "confirmRemove": "Bu işçini filialdan çıxarmaq istədiyinizə əminsiniz?"
+      
+    }
+  },
+  "desks": {
+    "title": "Masaları İdarə Et",
+    "search": {
+      "placeholder": "Masaları axtar..."
+    },
+    "addService": "Xidmət",
+    "filters": {
+      "status": {
+        "label": "Status",
+        "all": "Bütün Statuslar",
+        "active": "Aktiv",
+        "inactive": "Deaktiv"
+      }
+    },
+    "buttons": {
+      "addDesk": "Masa Əlavə Et",
+      "assignServices": "Xidmətlər Təyin Et",
+      "edit": "Masanı Düzənlə",
+      "view": "Masaya Bax",
+      "delete": "Masanı Sil",
+      "desk": "Masa"
+    },
+    "table": {
+      "headers": {
+        "name": "Ad",
+        "services": "Xidmətlər",
+        "subServices": "Alt Xidmətlər",
+        "status": "Status",
+        "totalEmployees": "Ümumi İşçilər",
+        "actions": "Əməliyyatlar"
+      },
+      "searchPlaceholder": "Masaları axtar...",
+      "statusFilter": {
+        "all": "Bütün Statuslar",
+        "active": "Aktiv",
+        "inactive": "Deaktiv"
+      },
+      "noServices": "Təyin edilmiş xidmət yoxdur",
+      "noSubServices": "Təyin edilmiş alt xidmət yoxdur"
+    },
+    "tooltips": {
+      "edit": "Masanı Düzənlə",
+      "view": "Masaya Bax",
+      "delete": "Masanı Sil",
+      "assignServices": "Xidmətlər Təyin Et"
+    },
+    "deleteModal": {
+      "title": "Masanı Sil",
+      "message": "{deskName} masasını silmək istədiyinizə əminsiniz? Bu əməliyyat geri qaytarıla bilməz.",
+      "confirmText": "Sil"
+    },
+    "notifications": {
+      "deleteSuccess": "Masa uğurla silindi",
+      "failedToLoadDesks": "Masaları yükləmək alınmadı",
+      "failedToLoadServices": "Xidmətləri yükləmək alınmadı",
+      "deleteError": "Masanı silmək alınmadı",
+      "loadError": "Masaları yükləmək alınmadı"
+    },
+    "pagination": {
+      "itemsPerPage": "səhifədəki məlumatlar",
+      "of": "/"
+    },
+    "modal": {
+      "title": "Masanı Sil",
+      "message": "{deskName} masasını silmək istədiyinizə əminsiniz? Bu əməliyyat geri qaytarıla bilməz.",
+      "confirmButton": "Sil"
+    },
+    "status": {
+      "ACTIVE": "Aktiv",
+      "INACTIVE": "Deaktiv"
+    }
+  },
+  "deskForm": {
+    "title": {
+      "create": "Yeni Masa Yarat",
+      "edit": "Masanı Düzənlə"
+    },
+    "tabs": {
+      "basic": "Əsas Məlumat",
+      "services": "Xidmətlər"
+    },
+    "fields": {
+      "name": {
+        "label": "Ad *",
+        "placeholder": "Masa adını daxil edin",
+        "error": "Ad tələb olunur"
+      },
+      "description": {
+        "label": "Təsvir",
+        "placeholder": "Təsvir daxil edin"
+      },
+      "status": {
+        "label": "Status",
+        "options": {
+          "active": "Aktiv",
+          "inactive": "Deaktiv"
+        }
+      }
+    },
+    "services": {
+      "title": "Mövcud Xidmətlər",
+      "subServicesTitle": "Alt Xidmətlər",
+      "noSubServices": "Alt xidmət mövcud deyil",
+      "status": {
+        "active": "Aktiv",
+        "inactive": "Deaktiv"
+      }
+    },
+    "subServices": {
+      "title": "Alt Xidmətlər",
+      "noSubServices": "Alt xidmət mövcud deyil"
+    },
+    "buttons": {
+      "cancel": "Ləğv Et",
+      "create": "Yarat",
+      "update": "Yenilə",
+      "creating": "Yaradılır...",
+      "updating": "Yenilənir..."
+    },
+    "notifications": {
+      "createSuccess": "Masa uğurla yaradıldı",
+      "createError": "Masa yaratmaq alınmadı",
+      "updateSuccess": "Masa uğurla yeniləndi",
+      "updateError": "Masanı yeniləmək alınmadı"
+    }
+  },
+  "deskDetail": {
+    "title": "Masa Məlumatları",
+    "tabs": {
+      "overview": "Ümumi Baxış",
+      "services": "Xidmətlər",
+      "employees": "İşçilər"
+    },
+    "overview": {
+      "title": "Masa Məlumatı",
+      "fields": {
+        "name": "Ad",
+        "status": "Status",
+        "totalEmployees": "Ümumi İşçilər",
+        "totalServices": "Ümumi Xidmətlər",
+        "totalSubServices": "Ümumi Alt Xidmətlər"
+      }
+    },
+    "services": {
+      "mainServices": {
+        "title": "Əsas Xidmətlər",
+        "noServices": "Əsas xidmət təyin edilməyib"
+      },
+      "subServices": {
+        "title": "Alt Xidmətlər",
+        "noSubServices": "Alt xidmət təyin edilməyib"
+      }
+    },
+    "employees": {
+      "title": "Təyin Edilmiş İşçilər",
+      "noEmployees": "Bu masaya təyin edilmiş işçi yoxdur",
+      "buttons": {
+        "assign": "İşçi Təyin Et",
+        "remove": "Çıxar"
+      },
+      "modal": {
+        "title": "İşçini Çıxar",
+        "message": "{name} işçisini bu masadan çıxarmaq istədiyinizə əminsiniz? Bu əməliyyat geri qaytarıla bilməz.",
+        "confirmButton": "Çıxar",
+        "cancelButton": "Ləğv Et"
+      }
+    },
+    "notifications": {
+      "employeeAssigned": "İşçilər uğurla təyin edildi",
+      "employeeAssignError": "İşçiləri təyin etmək alınmadı",
+      "employeeRemoved": "İşçi uğurla çıxarıldı",
+      "employeeRemoveError": "İşçini çıxarmaq alınmadı",
+      "branchEmployeesError": "Filial işçiləri yükləmək alınmadı",
+      "loadError": "Masa məlumatlarını yükləmək alınmadı"
+    },
+    "noDesk": "Masa tapılmadı",
+    "status": {
+      "ACTIVE": "AKTİV",
+      "INACTIVE": "DEAKTİV"
+    },
+    "modal": {
+      "title": "İşçini Çıxar",
+      "message": "Bu masadan {name} işçisini çıxarmaq istədiyinizə əminsiniz? Bu əməliyyat geri qaytarıla bilməz.",
+      "confirmButton": "Çıxar"
+    },
+    "buttons": {
+      "back": "Masalara Qayıt"
+    }
+  },
+  "assignEmployees": {
+    "title": "Masaya İşçi Təyin Et",
+    "search": {
+      "placeholder": "İşçiləri axtar..."
+    },
+    "noEmployees": "Mövcud işçi tapılmadı",
+    "buttons": {
+      "cancel": "Ləğv Et",
+      "assign": "Seçilənləri Təyin Et",
+      "assigning": "Təyin Edilir..."
+    },
+    "modal": {
+      "title": "İşçini Çıxar",
+      "message": "Bu işçini çıxarmaq istədiyinizə əminsiniz",
+      "confirmButton": "Çıxar"
+    }
+  },
+  "assignServices": {
+    "title": "{deskName} masasına Xidmətlər Təyin Et",
+    "tabs": {
+      "services": "Xidmətlər",
+      "subServices": "Alt Xidmətlər"
+    },
+    "services": {
+      "selectSubServices": "(Alt xidmətləri seçin)",
+      "noServices": "Mövcud xidmət yoxdur"
+    },
+    "subServices": {
+      "pleaseSelectServices": "Alt xidmətləri görmək üçün əvvəlcə xidmətləri seçin",
+      "noSubServices": "Bu xidmət üçün alt xidmət mövcud deyil"
+    },
+    "buttons": {
+      "cancel": "Ləğv Et",
+      "save": "Dəyişiklikləri Saxla",
+      "saving": "Saxlanılır..."
+    },
+    "validation": {
+      "selectService": "Ən azı bir xidmət seçin"
+    },
+    "notifications": {
+      "success": "Xidmətlər uğurla təyin edildi",
+      "error": "Xidmətləri təyin etmək alınmadı",
+      "loadError": "Xidmətləri yükləmək alınmadı"
+    },
+    "status": {
+      "ACTIVE": "AKTİV",
+      "INACTIVE": "DEAKTİV"
+    }
+  },
+  "services": {
+    "title": "Xidmətlərə baxın və ya silin",
+    "table": {
+      "headers": {
+        "name": "Xidmət Adı",
+        "subServices": "Alt Xidmətlər",
+        "status": "Status",
+        "actions": "Əməliyyatlar"
+      },
+      "noServices": "Bu filiala hələ xidmət təyin edilməyib"
+    },
+    "buttons": {
+      "remove": "Çıxar",
+      "back": "Geri"
+    },
+    "modal": {
+      "title": "Xidməti Çıxar",
+      "message": "{serviceName} xidmətini bu filialdan çıxarmaq istədiyinizə əminsiniz?",
+      "confirmButton": "Çıxar",
+      "cancelButton": "Ləğv Et"
+    },
+    "notifications": {
+      "removeSuccess": "Xidmət uğurla çıxarıldı",
+      "removeError": "Xidməti çıxarmaq alınmadı",
+      "loadError": "Filial xidmətlərini yükləmək alınmadı"
+    },
+    "status": {
+      "ACTIVE": "AKTİV",
+      "INACTIVE": "DEAKTİV"
+    }
+  },
+  "numerators": {
+    "title": "Numeratorları İdarə Et",
+    "search": {
+      "placeholder": "Numeratorları axtar..."
+    },
+    "table": {
+      "headers": {
+        "name": "Ad",
+        "serialNo": "Seriya Nömrəsi",
+        "status": "Status",
+        "actions": "Əməliyyatlar"
+      },
+      "noNumerators": "Numerator tapılmadı"
+    },
+    "buttons": {
+      "add": "Yeni Numerator Əlavə Et",
+      "edit": "Numeratoru Düzənlə",
+      "delete": "Numeratoru Sil",
+      "cancel": "Ləğv Et",
+      "create": "Numerator Əlavə Et",
+      "update": "Numeratoru Yenilə",
+      "creating": "Yaradılır...",
+      "updating": "Yenilənir..."
+    },
+    "form": {
+      "title": {
+        "add": "Yeni Numerator Əlavə Et",
+        "edit": "Numeratoru Düzənlə"
+      },
+      "fields": {
+        "name": {
+          "label": "Ad",
+          "placeholder": "Numerator adını daxil edin"
+        },
+        "serialNo": {
+          "label": "Seriya Nömrəsi",
+          "placeholder": "Seriya nömrəsini daxil edin"
+        },
+        "status": {
+          "label": "Status",
+          "options": {
+            "active": "Aktiv",
+            "inactive": "Deaktiv"
+          }
+        }
+      }
+    },
+    "modal": {
+      "title": "Numeratoru Sil",
+      "message": "Bu numeratoru silmək istədiyinizə əminsiniz? Bu əməliyyat geri qaytarıla bilməz.",
+      "confirmButton": "Sil"
+    },
+    "notifications": {
+      "createSuccess": "Numerator uğurla əlavə edildi",
+      "createError": "Numerator əlavə etmək alınmadı",
+      "updateSuccess": "Numerator uğurla yeniləndi",
+      "updateError": "Numeratoru yeniləmək alınmadı",
+      "deleteSuccess": "Numerator uğurla silindi",
+      "deleteError": "Numeratoru silmək alınmadı",
+      "loadError": "Numeratorları yükləmək alınmadı",
+      "duplicateSerial": "Bu seriya nömrəsi ilə numerator artıq mövcuddur",
+      "unauthorized": "Bu səhifəni görmək üçün icazəniz yoxdur."
+    },
+    "status": {
+      "active": "AKTİV",
+      "inactive": "DEAKTİV"
+    }
+  },
+  "adminServices": {
+    "title": "Mövcud xidmətləri idarə et və nəzərdən keçir",
+    "search": {
+      "placeholder": "Ad, e-poçt və ya əlaqəli məlumatlarla axtar..."
+    },
+    "filters": {
+      "status": {
+        "label": "Status Filtri",
+        "all": "Bütün Statuslar",
+        "active": "Aktiv",
+        "inactive": "Deaktiv"
+      }
+    },
+    "summary": {
+      "showing": "{total} xidmətdən {count}-i göstərilir"
+    },
+    "table": {
+      "headers": {
+        "name": "Ad",
+        "subServices": "Alt Xidmətlər",
+        "branches": "Filiallar",
+        "status": "Status",
+        "actions": "Əməliyyatlar"
+      },
+      "noServices": "Xidmət tapılmadı. İlk xidmətinizi yaradın!"
+    },
+    "buttons": {
+      "new": "Yeni Xidmət",
+      "edit": "Düzəliş Et",
+      "delete": "Sil",
+      "subServices": "Alt Xidmətlər"
+    },
+    "modal": {
+      "title": "Xidməti Sil",
+      "message": "\"{serviceName}\" xidmətini silmək istədiyinizə əminsiniz? Bu əməliyyat geri qaytarıla bilməz və bütün əlaqəli alt xidmətlər də silinəcək.",
+      "confirmButton": "Sil",
+      "cancelButton": "Ləğv Et"
+    },
+    "notifications": {
+      "deleteSuccess": "Xidmət uğurla silindi",
+      "deleteError": "Xidməti silmək alınmadı",
+      "loadError": "Xidmətləri yükləmək alınmadı"
+    },
+    "pagination": {
+      "itemsPerPage": "səhifə üzrə element",
+      "page": "Səhifə {current} / {total}"
+    },
+    "status": {
+      "ACTIVE": "AKTİV",
+      "INACTIVE": "DEAKTİV"
+    }
+  },
+  "serviceForm": {
+    "title": {
+      "create": "Yeni Xidmət Yarat",
+      "edit": "Xidmətə Düzəliş Et"
+    },
+    "sections": {
+      "basic": {
+        "title": "Əsas Məlumatlar",
+        "name": {
+          "label": "Xidmət Adı",
+          "placeholder": "Xidmət adını daxil edin",
+          "required": "Xidmət adı tələb olunur"
+        },
+        "status": {
+          "label": "Status",
+          "active": "Aktiv",
+          "inactive": "Deaktiv"
+        }
+      },
+      "branches": {
+        "title": "Filial Seçimi",
+        "noBranches": "Mövcud filial yoxdur",
+        "error": "Ən azı bir filial seçilməlidir"
+      },
+      "subServices": {
+        "title": "Alt Xidmətlər",
+        "add": "Alt Xidmət Əlavə Et",
+        "placeholder": "Alt xidmət adını daxil edin",
+        "required": "Alt xidmət adı tələb olunur"
+      }
+    },
+    "buttons": {
+      "cancel": "Ləğv Et",
+      "create": "Xidmət Yarat",
+      "update": "Xidməti Yenilə",
+      "creating": "Yaradılır...",
+      "updating": "Yenilənir..."
+    },
+    "notifications": {
+      "validation": "Zəhmət olmasa formu düzgün doldurun",
+      "createSuccess": "Xidmət uğurla yaradıldı",
+      "createError": "Xidmət yaratmaq alınmadı",
+      "updateSuccess": "Xidmət uğurla yeniləndi",
+      "updateError": "Xidməti yeniləmək alınmadı",
+      "loadError": "Xidməti yükləmək alınmadı",
+      "branchLoadError": "Filialları yükləmək alınmadı",
+      "invalidBranchesData": "Filialların düzgün formatı yoxdur",
+      "serviceNotFound": "Xidmət tapılmadı"
+    }
+  },
+  "subServices": {
+    "title": "{serviceName} üçün Alt Xidmətlər",
+    "search": {
+      "placeholder": "Ada görə axtar..."
+    },
+    "filters": {
+      "status": {
+        "label": "Status Filtri",
+        "all": "Bütün Statuslar",
+        "active": "Aktiv",
+        "inactive": "Deaktiv"
+      }
+    },
+    "summary": {
+      "showing": "{total} alt xidmətdən {count}-i göstərilir"
+    },
+    "table": {
+      "headers": {
+        "name": "Ad",
+        "status": "Status"
+      },
+      "noSubServices": "Alt xidmət tapılmadı. Əlavə etmək üçün Düzəliş Et düyməsini klikləyin."
+    },
+    "buttons": {
+      "edit": "Xidmət və Alt Xidmətlərə Düzəliş Et"
+    },
+    "pagination": {
+      "itemsPerPage": "səhifə üzrə element",
+      "page": "Səhifə {current} / {total}"
+    },
+    "status": {
+      "ACTIVE": "AKTİV",
+      "INACTIVE": "DEAKTİV"
+    },
+    "notifications": {
+      "loadError": "Xidmət məlumatlarını yükləmək alınmadı"
+    }
+  },
+  "displayScreen": {
+    "title": "Ekran Görüntüləri",
+    "subtitle": "Ekran görüntüsünə baxmaq üçün filial seçin",
+    "branchCard": {
+      "status": {
+        "ACTIVE": "AKTİV",
+        "INACTIVE": "DEAKTİV"
+      }
+    },
+    "noBranches": "Mövcud filial yoxdur",
+    "notifications": {
+      "loadError": "Filialları yükləmək alınmadı"
+    }
+  },
+  "displayBoard": {
+    "title": "Interval Number Ekranı",
+    "subtitle": "Cari Vəziyyət",
+    "loading": "Interval numberlar yüklənir...",
+    "footer": "Zəhmət olmasa interval number nömrəniz çağırılana qədər gözləyin",
+    "desk": {
+      "default": "Masa {number}",
+      "noTokens": "Aktiv interval number yoxdur"
+    },
+    "token": {
+      "status": {
+        "SERVING": "XİDMƏTDƏ",
+        "WAITING": "GÖZLƏYİR",
+        "COMPLETED": "TAMAMLANDI",
+        "CALLED": "ÇAĞIRILDI",
+        "MISSED": "BURAXILDI",
+        "PENDING": "GÖZLƏMƏDƏDİR",
+        "CANCELLED": "LƏĞV EDİLDİ",
+        "SKIPPED": "BURAXILDI",
+        "ON_HOLD": "GÖZLƏMƏDƏDİR"
+      }
+    },
+    "notifications": {
+      "connectionError": "Ekrana qoşulmaq alınmadı",
+      "loadError": "Interval numberları yükləmək alınmadı"
+    }
+  },
+  "deskScreens": {
+    "title": "Masa Ekranları",
+    "subtitle": {
+      "manager": "Filialınızın masa ekranlarını idarə edin və izləyin",
+      "admin": "Bütün filiallardakı masa ekranlarını idarə edin və izləyin"
+    },
+    "stats": {
+      "activeDesks": "Aktiv Masaların Cəmi"
+    },
+    "filters": {
+      "search": "Filialları axtar...",
+      "cities": {
+        "all": "Bütün Şəhərlər"
+      },
+      "status": {
+        "all": "Bütün Statuslar",
+        "active": "Aktiv",
+        "inactive": "Deaktiv"
+      }
+    },
+    "branch": {
+      "activeDesks": "Aktiv Masalar",
+      "noDesks": "Bu filialda aktiv masa yoxdur",
+      "status": {
+        "ACTIVE": "AKTİV",
+        "INACTIVE": "DEAKTİV"
+      }
+    },
+    "noBranches": {
+      "assigned": "Sizə təyin edilmiş filial yoxdur",
+      "filtered": "Axtarış kriteriyalarına uyğun filial tapılmadı"
+    },
+    "notifications": {
+      "fetchError": "Filialları yükləmək alınmadı",
+      "noBranchesAssigned": "Sizə təyin edilmiş filial yoxdur"
+    }
+  },
+  "deskScreen": {
+    "loading": "Masa Məlumatları Yüklənir...",
+    "error": "Xəta: {message}",
+    "noEmployees": {
+      "title": "Təyin Edilmiş İşçi Yoxdur",
+      "description": "Bu masaya hal-hazırda heç bir işçi təyin edilməyib."
+    },
+    "table": {
+      "headers": {
+        "employee": "İşçi",
+        "status": "Status",
+        "currentToken": "Cari Interval Number"
+      }
+    },
+    "employeeStatus": {
+      "onBreak": {
+        "text": "Fasilədə",
+        "icon": "☕"
+      },
+      "active": {
+        "text": "Aktiv",
+        "icon": "💻"
+      },
+      "inactive": {
+        "text": "N/A",
+        "icon": "⏸️"
+      }
+    },
+    "token": {
+      "noActive": "Aktiv interval number yoxdur"
+    },
+    "lastUpdated": "Son yenilənmə: {time}",
+    "notifications": {
+      "fetchError": "Masa məlumatlarını yükləmək alınmadı",
+      "socketConnected": "Socket serverə qoşuldu",
+      "socketUpdate": "Masa yeniləməsi alındı"
+    }
+  },
+  "numeratorsList": {
+    "title": "Numerator məlumatlarını idarə edin və nəzərdən keçirin",
+    "search": {
+      "placeholder": "Seriya və ya ada görə numeratorları axtar..."
+    },
+    "noNumerators": "Numerator tapılmadı",
+    "numerator": {
+      "serialNo": "Seriya No: {number}",
+      "status": {
+        "ACTIVE": "AKTİV",
+        "INACTIVE": "DEAKTİV"
+      }
+    },
+    "buttons": {
+      "generateToken": "Interval Number Yarat"
+    },
+    "notifications": {
+      "fetchError": "Numeratorları yükləmək alınmadı",
+      "branchError": "Filialları yükləmək alınmadı"
+    }
+  },
+  "tokenGeneration": {
+    "title": "Queue Soft",
+    "loading": "Xidmətlər yüklənir...",
+    "noServices": "Mövcud xidmət yoxdur",
+    "backButton": "Xidmətlərə Qayıt",
+    "subServiceTitle": "{serviceName} üçün Alt-xidmət Seçin",
+    "buttons": {
+      "generate": {
+        "default": "Interval Number Yarat",
+        "generating": "Çap edilir..."
+      },
+      "print": "Bileti Çap Et",
+      "close": "Bağla"
+    },
+    "modal": {
+      "tokenNumber": "Interval Number Nömrəniz",
+      "details": {
+        "service": "Xidmət",
+        "subService": "Alt-Xidmət",
+        "counter": "Pəncərə",
+        "staff": "İşçi"
+      },
+      "footer": "Zəhmət olmasa bu interval number nömrəsini saxlayın"
+    },
+    "printTicket": {
+      "title": "Queue Soft",
+      "tokenNo": "Interval Number №:",
+      "details": {
+        "service": "Xidmət:",
+        "type": "Növ:",
+        "counter": "Pəncərə:",
+        "staff": "İşçi:"
+      },
+      "footer": "Zəhmət olmasa bu interval numberi saxlayın"
+    },
+    "notifications": {
+      "selectBoth": "Zəhmət olmasa həm xidmət, həm də alt-xidmət seçin",
+      "generateError": "Interval number yaratmaq alınmadı",
+      "loadError": "Xidmətləri yükləmək alınmadı",
+      "invalidData": "Yanlış xidmət məlumatları alındı"
+    }
+  },
+  "usersPage": {
+    "title": {
+        "superadmin": "İstifadəçiləri İdarə Et",
+        "manager": "İşçiləri İdarə Et"
+    },
+    "filters": {
+      "search": "Ad, email və ya filiala görə axtar...",
+      "role": {
+        "all": "Bütün Rollar",
+        "ADMIN": "Admin",
+        "MANAGER": "Menecer",
+        "EMPLOYEE": "İşçi",
+        "SUPERADMIN": "Super Admin"
+      },
+      "branch": {
+        "all": "Bütün Filiallar",
+        "loading": "Filiallar yüklənir..."
+      },
+      "status": {
+        "all": "Bütün Statuslar",
+        "ACTIVE": "Aktiv",
+        "INACTIVE": "Deaktiv"
+      }
+    },
+    "table": {
+      "headers": {
+        "name": "Ad",
+        "email": "Email",
+        "role": "Rol",
+        "branch": "Filial",
+        "status": "Status",
+        "actions": "Əməliyyatlar"
+      },
+      "noUsers": "İstifadəçi tapılmadı",
+      "actions": {
+        "edit": "Düzəliş et",
+        "delete": "Sil",
+        "viewLogs": "Logları Görüntülə"
+      },
+      "options": {
+        "role": {
+          "EMPLOYEE": "İşçi",
+          "MANAGER": "Menecer"
+        }
+      },
+      "status": {
+        "ACTIVE": "Aktiv",
+        "INACTIVE": "Deaktiv"
+      },
+      "notAssigned":"Təyin edilməyib"
+    },
+    "pagination": {
+      "showing": "{total} {start}-{end} arasında göstərilir",
+      "itemsPerPage": "Səhifə başına",
+      "user": "istifadəçilər",
+      "employee": "işçilər",
+      "of": "/"
+    },
+    "modal": {
+      "add": {
+        "title": "Yeni İstifadəçi Əlavə Et",
+        "success": "İstifadəçi uğurla yaradıldı"
+      },
+      "edit": {
+        "title": "İstifadəçini Redaktə Et",
+        "success": "İstifadəçi uğurla yeniləndi"
+      },
+      "delete": {
+        "title": "İstifadəçini Sil",
+        "message": "{userName} istifadəçisini silmək istədiyinizə əminsiniz?",
+        "description": "Bu əməliyyat geri qaytarıla bilməz.",
+        "confirm": "Bəli, sil",
+        "cancel": "Ləğv et",
+        "success": "İstifadəçi uğurla silindi"
+      }
+    },
+    "form": {
+      "labels": {
+        "fullName": "Tam Ad",
+        "email": "Email Ünvanı",
+        "password": "Şifrə",
+        "role": "Rol",
+        "branch": "Filial",
+        "status": "Status"
+      },
+      "placeholders": {
+        "fullName": "Tam adı daxil edin",
+        "email": "Email ünvanını daxil edin",
+        "password": "Şifrəni daxil edin",
+        "role": "Rol seçin",
+        "branch": "Filial seçin",
+        "status": "Status seçin"
+      },
+      "validation": {
+        "required": {
+          "fullName": "Tam ad tələb olunur",
+          "email": "Email tələb olunur",
+          "password": "Şifrə tələb olunur",
+          "role": "Rol tələb olunur",
+          "branch": "Filial tələb olunur"
+        },
+        "invalid": {
+          "email": "Yanlış email ünvanı"
+        },
+        "minLength": {
+          "password": "Şifrə ən az 6 simvol olmalıdır"
+        }
+      },
+      "buttons": {
+        "save": "Dəyişiklikləri Yadda Saxla",
+        "cancel": "Ləğv et",
+        "addUser": "İstifadəçi Əlavə Et",
+        "addEmployee": "İşçi Əlavə Et"
+      }
+    },
+    "notifications": {
+      "fetchError": "İstifadəçiləri yükləmək alınmadı",
+      "branchError": "Filialları yükləmək alınmadı",
+      "createError": "İstifadəçi yaratmaq alınmadı",
+      "updateError": "İstifadəçini yeniləmək alınmadı",
+      "deleteError": "İstifadəçini silmək alınmadı",
+      "unauthorized": "Bu əməliyyatı yerinə yetirmək üçün icazəniz yoxdur"
+    }
+  },
+  "userModal": {
+    "title": {
+      "edit": "İşçini Redaktə Et",
+      "add": "Yeni İşçi Əlavə Et"
+    },
+    "labels": {
+      "fullName": "Tam Ad",
+      "email": "Email",
+      "password": "Şifrə",
+      "passwordOptional": " (İxtiyari)",
+      "role": "Rol",
+      "status": "Status"
+    },
+    "placeholders": {
+      "fullName": "Tam adı daxil edin",
+      "email": "Email ünvanını daxil edin",
+      "password": "Şifrəni daxil edin",
+      "passwordUpdate": "Şifrəni daxil edin (İxtiyari)"
+    },
+    "validation": {
+      "fullName": "Tam ad tələb olunur",
+      "email": {
+        "required": "Email tələb olunur",
+        "invalid": "Yanlış email ünvanı"
+      },
+      "password": {
+        "required": "Şifrə tələb olunur",
+        "minLength": "Şifrə ən az 6 simvol olmalıdır"
+      }
+    },
+    "options": {
+      "role": {
+        "EMPLOYEE": "İşçi",
+        "MANAGER": "Menecer"
+      },
+      "status": {
+        "ACTIVE": "Aktiv",
+        "INACTIVE": "Deaktiv"
+      }
+    },
+    "buttons": {
+      "cancel": "Ləğv et",
+      "update": "İşçini Yenilə",
+      "create": "İşçi Yarat",
+      "updating": "Yenilənir...",
+      "creating": "Yaradılır..."
+    }
+  },
+  "userLogs": {
+    "title": "Fəaliyyət Tarixçəsi",
+    "filters": {
+      "title": "Filtrlər",
+      "dateRange": {
+        "label": "Tarix Aralığı",
+        "options": {
+          "today": "Bu gün",
+          "yesterday": "Dünən",
+          "lastWeek": "Son 7 gün",
+          "lastMonth": "Son 30 gün",
+          "custom": "Xüsusi Aralıq"
+        }
+      },
+      "activityType": {
+        "label": "Fəaliyyət Növü",
+        "options": {
+          "all": "Bütün Fəaliyyətlər",
+          "BREAK_START": "Fasilə Başladı",
+          "BREAK_END": "Fasilə Bitdi",
+          "SHIFT_START": "Növbə Başladı",
+          "SHIFT_END": "Növbə Bitdi",
+          "TOKEN_COMPLETE": "Interval Number Tamamlandı",
+          "WORK_START": "İş Başladı",
+          "WORK_END": "İş Bitdi"
+        }
+      },
+      "sortOrder": {
+        "label": "Sıralama",
+        "newest": "Ən Yeni",
+        "oldest": "Ən Köhnə"
+      }
+    },
+    "summary": {
+      "workTime": {
+        "title": "Ümumi İş Vaxtı",
+        "empty": "0"
+      },
+      "breakTime": {
+        "title": "Ümumi Fasilə Vaxtı",
+        "empty": "0"
+      },
+      "breakCount": {
+        "title": "Fasilə Sayı",
+        "empty": "0"
+      },
+      "tokensCompleted": {
+        "title": "Tamamlanmış Interval Numberlar",
+        "empty": "0"
+      },
+      "currentStatus": {
+        "title": "Cari Status",
+        "states": {
+          "ONLINE": "Onlayn",
+          "OFFLINE": "Oflayn",
+          "BREAK": "Fasilə",
+          "WORKING": "İşləyir"
+
+        }
+      }
+    },
+    "table": {
+      "headers": {
+        "date": "Tarix",
+        "time": "Vaxt",
+        "activity": "Fəaliyyət"
+      },
+      "empty": "Bu tarix üçün qeyd tapılmadı",
+      "loading": "Qeydlər yüklənir..."
+    }
+  },
+  "employeeDashboard": {
+    "loading": "İstifadəçi məlumatları yüklənir...",
+    "error": "Xəta: {error}",
+    "loginPrompt": "Davam etmək üçün daxil olun",
+    "welcome": "Xoş gəlmisiniz, {name}",
+    "info": {
+      "desk": "Masa: {name}",
+      "branch": "Filial: {name}",
+      "status": {
+        "label": "Status: {status}",
+        "working": "İşləyir",
+        "onBreak": "Fasilədə",
+        "notWorking": "İşləmir"
+      },
+      "notAssigned": "Təyin edilməyib"
+    },
+    "warnings": {
+      "noDesk": "Siz heç bir masaya təyin edilməmisiniz. Administratorla əlaqə saxlayın."
+    },
+    "stats": {
+      "currentToken": {
+        "title": "Cari Interval#",
+        "empty": "Aktiv interval number yoxdur"
+      },
+      "nextToken": {
+        "title": "Növbəti Interval#",
+        "empty": "Növbədə interval number yoxdur"
+      },
+      "queueLength": {
+        "title": "Növbə Uzunluğu"
+      },
+      "completedToday": {
+        "title": "Bu gün Tamamlanan"
+      }
+    },
+    "actions": {
+      "startWork": "İşə Başla",
+      "endWork": "İşi Bitir",
+      "startBreak": "Fasiləyə Başla",
+      "endBreak": "Fasiləni Bitir",
+      "nextToken": "Növbəti Interval#",
+      "completeAndNext": "Tamamla & Növbəti",
+      "completeToken": "Tamamla Interval#"
+    },
+    "confirmations": {
+      "startWork": {
+        "title": "İşə Başlamağı Təsdiqləyin",
+        "message": "İş gününə başlamağa hazırsınız?"
+      },
+      "endWork": {
+        "title": "İşi Bitirməyi Təsdiqləyin",
+        "message": "İş gününüzü bitirmək istədiyinizə əminsiniz?"
+      },
+      "startBreak": {
+        "title": "Fasiləni Təsdiqləyin",
+        "message": "Fasiləyə başlamaq istədiyinizə əminsiniz? Bu, işinizi dayandıracaq."
+      },
+      "endBreak": {
+        "title": "Fasiləni Bitirməyi Təsdiqləyin",
+        "message": "Fasilədən qayıtmağa hazırsınız?"
+      }
+    },
+    "messages": {
+      "onBreak": "Hal-hazırda fasilədəsiniz. İşə davam etmək üçün fasiləni bitirin.",
+      "success": {
+        "workStarted": "İş uğurla başladı",
+        "workEnded": "İş uğurla bitdi",
+        "breakStarted": "Fasilə uğurla başladı",
+        "breakEnded": "Fasilə uğurla bitdi",
+        "tokenCompleted": "Interval number uğurla tamamlandı",
+        "nextToken": "Növbəti interval number xidmət göstərilir"
+      },
+      "error": {
+        "userNotFound": "İstifadəçi tapılmadı",
+        "failedToLoad": "Interval numberları yükləmək alınmadı",
+        "failedToServe": "Növbəti interval numberə xidmət göstərmək alınmadı",
+        "failedToComplete": "Interval numberi tamamlamaq alınmadı",
+        "failedToStartWork": "İşə başlamaq alınmadı",
+        "failedToEndWork": "İşi bitirmək alınmadı",
+        "failedToStartBreak": "Fasiləyə başlamaq alınmadı",
+        "failedToEndBreak": "Fasiləni bitirmək alınmadı"
+      }
+    },
+    "dialog": {
+      "cancel": "Ləğv et",
+      "confirm": "Təsdiqlə"
+    }
+  },
+  "login": {
+    "title": "Hesabınıza daxil olun",
+    "subtitle": "Xoş gəldiniz! Zəhmət olmasa məlumatlarınızı daxil edin",
+    "form": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Email ünvanınızı daxil edin",
+        "error": {
+          "required": "Email tələb olunur",
+          "invalid": "Yanlış email formatı"
+        }
+      },
+      "password": {
+        "label": "Şifrə",
+        "placeholder": "Şifrənizi daxil edin",
+        "error": {
+          "required": "Şifrə tələb olunur",
+          "minLength": "Şifrə ən az 6 simvol olmalıdır"
+        }
+      },
+      "forgotPassword": "Şifrənizi unutmusunuz?",
+      "submit": {
+        "default": "Daxil ol",
+        "loading": "Daxil olunur..."
+      }
+    },
+    "notifications": {
+      "success": "Uğurla daxil oldunuz",
+      "error": {
+        "default": "Daxil olmaq alınmadı",
+        "invalidCredentials": "Email və ya şifrə yanlışdır",
+        "userInactive": "Hesabınız deaktivdir",
+        "networkError": "Şəbəkə xətası baş verdi"
+      }
+    }
+  }
+}
