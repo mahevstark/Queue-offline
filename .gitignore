@@ -1,0 +1,22 @@
+# Node.js dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Next.js build output
+.next/
+
+# Log files
+logs/
+*.log
+
+# System files
+.DS_Store
+
+# VSCode settings
+.vscode/
