@@ -65,6 +65,13 @@ model User {
   managedBranch  Branch?   @relation("BranchManager")
   logs           UserLog[]
   tokens         Token[]
+
+  // Add these new fields
+  licenseKey        String?
+  licenseExpiresAt  DateTime?
+  licenseClientName String?
+  licenseDomain     String?
+  licenseSystemKey  String?
 }
 
 model Branch {

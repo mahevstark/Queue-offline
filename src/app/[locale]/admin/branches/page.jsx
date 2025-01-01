@@ -259,9 +259,17 @@ export default function BranchesPage() {
     };
 
     const renderManagerView = () => {
-        const branch = branches[0]; // Manager will only have one branch
-        if (!branch) return null;
+        // If manager has no branches, show message
+        if (!branches || branches.length === 0) {
+            return (
+                <div className="bg-white rounded-lg shadow-sm p-6 text-center">
+                    <p className="text-gray-600">{t('noBranchesFound')}</p>
+                </div>
+            );
+        }
 
+        const branch = branches[0];
+        
         return (
             <div className="space-y-6">
                 <div className="bg-white rounded-lg shadow-sm py-2 px-4">

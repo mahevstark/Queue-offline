@@ -3,6 +3,7 @@ import "../globals.css";
 import Providers from '@/components/providers/Providers'
 import ClientLayout from './ClientLayout';
 import { NextIntlClientProvider } from 'next-intl';
+import { initCronJobs } from '@/lib/initCron';
 import {getMessages, unstable_setRequestLocale} from 'next-intl/server';
 
 const geistSans = localFont({
@@ -23,6 +24,10 @@ export async function generateMetadata({ params: { locale } }) {
     title: messages.metadata.title,
     description: messages.metadata.description,
   };
+}
+// Only run in production and on the server
+if (process.env.NODE_ENV !== 'development' && typeof window === 'undefined') {
+  initCronJobs();
 }
 
 export default async function RootLayout({ children, params: { locale } }) {

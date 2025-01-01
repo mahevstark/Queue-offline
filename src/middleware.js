@@ -89,7 +89,7 @@ export async function middleware(request) {
   // Handle root path
   if (pathWithoutLocale === '' || pathWithoutLocale === '/') {
     if (!token) {
-      return NextResponse.redirect(new URL(`/${currentLocale}/login`, request.url));
+      return NextResponse.redirect(new URL(`/en/login`, request.url));
     }
     try {
       const secret = new TextEncoder().encode(process.env.JWT_SECRET);
@@ -113,7 +113,7 @@ export async function middleware(request) {
 
   // Check authentication for protected routes
   if (!token) {
-    return NextResponse.redirect(new URL(`/${currentLocale}/login`, request.url));
+    return NextResponse.redirect(new URL(`/en/login`, request.url));
   }
 
   try {

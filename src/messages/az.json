@@ -1415,6 +1415,14 @@
           "invalid": "Yanlış email formatı"
         }
       },
+      "license": {
+        "label": "Lisenziya",
+        "placeholder": "Lisenziyanızı daxil edin",
+        "error": {
+          "required": "Lisenziya tələb olunur",
+          "invalid": "Yanlış lisenziya formatı"
+        }
+      },
       "password": {
         "label": "Şifrə",
         "placeholder": "Şifrənizi daxil edin",

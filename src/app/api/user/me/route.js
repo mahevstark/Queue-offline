@@ -6,125 +6,86 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 export async function GET(request) {
     try {
-        // 1. Verify JWT_SECRET
-        if (!JWT_SECRET) {
-            console.error('JWT_SECRET is not defined');
-            return NextResponse.json({
-                success: false,
-                error: 'Server configuration error'
-            }, { status: 500 });
-        }
-
-        // 2. Check Authorization Header
         const authHeader = request.headers.get('authorization');
-        console.log('Auth header:', authHeader);
         
         if (!authHeader?.startsWith('Bearer ')) {
             return NextResponse.json({ 
-                success: false,
+                success: false, 
                 error: 'No token provided' 
             }, { status: 401 });
         }
 
-        // 3. Verify Token
         const token = authHeader.split(' ')[1];
-        let decoded;
-        try {
-            decoded = jwt.verify(token, JWT_SECRET);
-            console.log('Decoded token:', decoded);
-        } catch (jwtError) {
-            console.error('JWT verification failed:', jwtError);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        const user = await prisma.user.findUnique({
+            where: { id: decoded.id },
+            select: {
+                id: true,
+                fullName: true,
+                email: true,
+                role: true,
+                status: true,
+                isAvailable: true,
+                branchId: true,
+                branch: {
+                    select: {
+                        id: true,
+                        name: true,
+                    }
+                },
+                assignedDeskId: true,
+                assignedDesk: {
+                    select: {
+                        id: true,
+                        name: true,
+                        displayName: true,
+                        status: true
+                    }
+                },
+                licenseKey: true,
+                licenseExpiresAt: true,
+                licenseClientName: true,
+                licenseDomain: true,
+                licenseSystemKey: true
+            }
+        });
+
+        if (!user) {
+            return NextResponse.json({ 
+                success: false, 
+                error: 'User not found' 
+            }, { status: 404 });
+        }
+
+        // Verify license
+        if (!user.licenseKey || !user.licenseExpiresAt) {
             return NextResponse.json({
                 success: false,
-                error: 'Invalid token'
+                error: 'No valid license found'
             }, { status: 401 });
         }
 
-        // 4. Check Prisma Connection
-        try {
-            await prisma.$connect();
-        } catch (prismaError) {
-            console.error('Prisma connection error:', prismaError);
+        const now = new Date();
+        const expiresAt = new Date(user.licenseExpiresAt);
+        
+        if (now > expiresAt) {
             return NextResponse.json({
                 success: false,
-                error: 'Database connection error'
-            }, { status: 500 });
+                error: 'License has expired'
+            }, { status: 401 });
         }
 
-        // 5. Find User
-        let user;
-        try {
-            user = await prisma.user.findUnique({
-                where: { 
-                    id: decoded.id 
-                },
-                select: {
-                    id: true,
-                    fullName: true,
-                    email: true,
-                    role: true,
-                    status: true,
-                    isAvailable: true,
-                    branchId: true,
-                    branch: {
-                        select: {
-                            id: true,
-                            name: true,
-                        }
-                    },
-                    assignedDeskId: true,
-                    assignedDesk: {
-                        select: {
-                            id: true,
-                            name: true,
-                            displayName: true,
-                            status: true
-                        }
-                    }
-                },
-            });
-
-            console.log('Found user data:', user);
-
-            if (!user) {
-                return NextResponse.json({ 
-                    success: false,
-                    error: 'User not found' 
-                }, { status: 404 });
-            }
-
-            // 6. Return Success Response
-            return NextResponse.json({ 
-                success: true,
-                data: user
-            });
-
-        } catch (dbError) {
-            console.error('Database query error:', dbError);
-            return NextResponse.json({
-                success: false,
-                error: 'Database query failed',
-                details: process.env.NODE_ENV === 'development' ? dbError.message : undefined
-            }, { status: 500 });
-        }
+        return NextResponse.json({ 
+            success: true,
+            data: user
+        });
 
     } catch (error) {
-        console.error('Unhandled API Error:', error);
-        
+        console.error('API Error:', error);
         return NextResponse.json({ 
-            success: false,
-            error: 'Internal server error',
-            details: process.env.NODE_ENV === 'development' ? {
-                message: error.message,
-                stack: error.stack
-            } : undefined
-        }, { status: 500 });
-    } finally {
-        // 7. Disconnect Prisma
-        try {
-            await prisma.$disconnect();
-        } catch (disconnectError) {
-            console.error('Prisma disconnect error:', disconnectError);
-        }
+            success: false, 
+            error: error.message || 'Internal server error'
+        }, { status: error.name === 'JsonWebTokenError' ? 401 : 500 });
     }
 }
