@@ -29,31 +29,40 @@ const Login = () => {
             if (!result.success) {
                 toast.dismiss(loadingToast);
                 toast.error(result.error || t('notifications.error.default'));
+                setIsLoading(false);
                 return;
             }
             
+            // Set user data first
             setUser(result.data);
+            await refreshUser(); // Refresh user data to ensure everything is up to date
+            
+            // Dismiss loading toast
             toast.dismiss(loadingToast);
             toast.success(t('notifications.success'));
             
+            // Handle redirect based on role
+            let redirectPath;
             switch (result.data.role) {
                 case 'SUPERADMIN':
-                    await router.push('/admin/branches');
+                    redirectPath = '/admin/branches';
                     break;
                 case 'MANAGER':
-                    await router.push('/dashboard');
+                    redirectPath = '/dashboard';
                     break;
                 case 'EMPLOYEE':
-                    await router.push('/employee-dashboard');
+                    redirectPath = '/employee-dashboard';
                     break;
                 default:
-                    await router.push('/login');
+                    redirectPath = '/login';
                     break;
             }
             
-            await refreshUser();
+            // Use await to ensure the redirect completes
+            await router.push(redirectPath);
             
         } catch (err) {
+            console.error('Login error:', err);
             toast.dismiss(loadingToast);
             toast.error(t('notifications.error.default'));
         } finally {
@@ -104,6 +113,13 @@ const Login = () => {
                             )}
                         </button>
                     </div>
+                    <input
+                        type="text"
+                        name="license"
+                        placeholder={t('form.license.placeholder')}
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-green-500 dark:focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                        required
+                    />
                     <button
                         type="submit"
                         disabled={isLoading}
@@ -119,14 +135,6 @@ const Login = () => {
                         )}
                     </button>
                 </form>
-                {/* <div className="flex flex-col space-y-2 text-center">
-                    <Link
-                        href="/reset-password"
-                        className="text-sm text-primaryGreen hover:text-primaryGreenHover"
-                    >
-                        {t('form.forgotPassword')}
-                    </Link>
-                </div> */}
             </div> 
         </div>
     );

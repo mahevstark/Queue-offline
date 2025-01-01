@@ -2,10 +2,11 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { getAuthToken, removeAuthToken } from '@/lib/clientAuth';
 import { toast } from 'react-hot-toast';
-
+import { useRouter } from 'next/navigation';
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
+    const router = useRouter();
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -59,6 +60,8 @@ export function UserProvider({ children }) {
             console.error('Error in fetchUser:', err);
             setError(err.message);
             setUser(null);
+            removeAuthToken();
+            router.push('/login');
             toast.error(err.message);
         } finally {
             setIsLoading(false);
@@ -67,6 +70,7 @@ export function UserProvider({ children }) {
 
     const logout = async () => {
         try {
+
             setIsLoading(true);
             const response = await fetch('/api/logout', {
                 method: 'POST',
@@ -84,6 +88,7 @@ export function UserProvider({ children }) {
             setUser(null);
             setError(null);
             removeAuthToken();
+            router.push('/login');
             return true;
         } catch (err) {
             console.error('Error during logout:', err);
@@ -158,6 +163,42 @@ export function UserProvider({ children }) {
             isAvailable: true
         });
     };
+
+    // Add license check function
+    const checkLicense = async () => {
+        if (!user?.id) return;
+
+        try {
+            const response = await fetch('/api/check-license', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId: user.id })
+            });
+
+            const data = await response.json();
+
+            if (data.shouldLogout) {
+                await logout();
+                toast.error('Your license has expired. Please login with a valid license.');
+            }
+        } catch (error) {
+            console.error('License check error:', error);
+        }
+    };
+
+    // Add effect for periodic license checks
+    useEffect(() => {
+        if (user) {
+            // Check license every 12 hours
+            const licenseCheckInterval = setInterval(() => {
+                checkLicense();
+            }, 12 * 60 * 60 * 1000);
+
+            return () => clearInterval(licenseCheckInterval);
+        }
+    }, [user]);
 
     useEffect(() => {
         fetchUser();

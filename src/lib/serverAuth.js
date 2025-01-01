@@ -64,7 +64,7 @@ export const authOptions = {
   },
   session: {
     strategy: "jwt",
-    maxAge: 24 * 60 * 60, // 24 hours
+    maxAge: 365 * 24 * 60 * 60, // 1 year instead of 24 hours
   },
   pages: {
     signIn: '/login',
@@ -84,7 +84,7 @@ export const createToken = (payload) => {
       branchId: payload.branchId,
       assignedDeskId: payload.assignedDeskId
     }, JWT_SECRET, {
-      expiresIn: '24h'
+      expiresIn: '365d' // 1 year instead of 24h
     });
     return token;
   } catch (error) {
@@ -104,7 +104,7 @@ export const setAuthCookie = async (token) => {
       httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 60 * 60 * 24, // 24 hours
+      maxAge: 365 * 24 * 60 * 60, // 1 year instead of 24 hours
       path: '/'
     });
 

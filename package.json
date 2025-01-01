@@ -36,6 +36,8 @@
     "next": "15.0.3",
     "next-auth": "^4.24.10",
     "next-intl": "^3.26.3",
+    "node-cron": "^3.0.3",
+    "node-machine-id": "^1.1.12",
     "nodemailer": "^6.9.16",
     "prisma": "^5.22.0",
     "react": "^18.2.0",

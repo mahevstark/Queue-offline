@@ -1422,6 +1422,14 @@
                 "invalid": "Invalid email format"
             }
         },
+        "license": {
+            "label": "License",
+            "placeholder": "Enter your license",
+            "error": {
+                "required": "License is required",
+                "invalid": "Invalid license format"
+            }
+        },
         "password": {
             "label": "Password",
             "placeholder": "Enter your password",
