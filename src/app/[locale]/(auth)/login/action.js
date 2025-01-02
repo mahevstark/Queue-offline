@@ -27,6 +27,7 @@ async function verifyAndUpdateLicense(user, licenseToken) {
     const currentSystemId = await getSystemId();
     console.log("License System Key:", license?.system_key);
     console.log("Current System ID:", currentSystemId);
+   
 
     // Check if license has all required fields in correct format
     const isValidFormat = license && 
@@ -236,6 +237,7 @@ export async function loginUser(formData) {
 
       // Get current system ID
       const currentSystemId = await getSystemId();
+
       // console.log("=== License Verification Debug ===");
       // console.log("Current System ID:", currentSystemId);
       // console.log("License System Key:", decodedLicense.system_key);
