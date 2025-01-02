@@ -3,16 +3,30 @@ import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import { createToken, setAuthCookie } from '@/lib/serverAuth';
 import jwt from 'jsonwebtoken';
-import { machineId } from 'node-machine-id';
+import { exec } from 'child_process';
+
+async function getSystemId() {
+  return new Promise((resolve, reject) => {
+    exec('wmic csproduct get uuid', (error, stdout, stderr) => {
+      if (error) {
+        console.error('Error fetching UUID:', error);
+        reject(error);
+        return;
+      }
+      const uuid = stdout.split('\n')[1]?.trim();
+      resolve(uuid);
+    });
+  });
+}
 
 async function verifyAndUpdateLicense(user, licenseToken) {
   try {
     if (!licenseToken) return false;
     
     const license = jwt.decode(licenseToken);
-    const currentSystemId = await machineId();
-    // console.log("License System Key:", license?.system_key);
-    // console.log("Current System ID:", currentSystemId);
+    const currentSystemId = await getSystemId();
+    console.log("License System Key:", license?.system_key);
+    console.log("Current System ID:", currentSystemId);
 
     // Check if license has all required fields in correct format
     const isValidFormat = license && 
@@ -221,7 +235,7 @@ export async function loginUser(formData) {
       }
 
       // Get current system ID
-      const currentSystemId = await machineId();
+      const currentSystemId = await getSystemId();
       // console.log("=== License Verification Debug ===");
       // console.log("Current System ID:", currentSystemId);
       // console.log("License System Key:", decodedLicense.system_key);
