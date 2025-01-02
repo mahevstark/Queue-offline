@@ -15,6 +15,7 @@ const Login = () => {
     const { setUser, refreshUser } = useUser();
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [isEmployee, setIsEmployee] = useState(false);
     const t = useTranslations('login');
 
     const handleSubmit = async (e) => {
@@ -25,22 +26,22 @@ const Login = () => {
         try {
             const formData = new FormData(e.target);
             const result = await loginUser(formData);
-            
+
             if (!result.success) {
                 toast.dismiss(loadingToast);
                 toast.error(result.error || t('notifications.error.default'));
                 setIsLoading(false);
                 return;
             }
-            
+
             // Set user data first
             setUser(result.data);
             await refreshUser(); // Refresh user data to ensure everything is up to date
-            
+
             // Dismiss loading toast
             toast.dismiss(loadingToast);
             toast.success(t('notifications.success'));
-            
+
             // Handle redirect based on role
             let redirectPath;
             switch (result.data.role) {
@@ -57,10 +58,10 @@ const Login = () => {
                     redirectPath = '/login';
                     break;
             }
-            
+
             // Use await to ensure the redirect completes
             await router.push(redirectPath);
-            
+
         } catch (err) {
             console.error('Login error:', err);
             toast.dismiss(loadingToast);
@@ -69,13 +70,13 @@ const Login = () => {
             setIsLoading(false);
         }
     };
-    
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-background">
             <div className="max-w-md w-full space-y-4 p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
                 <div className="flex justify-end">
-                    <LanguageSwitcher 
-                        className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" 
+                    <LanguageSwitcher
+                        className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                     />
                 </div>
 
@@ -113,13 +114,31 @@ const Login = () => {
                             )}
                         </button>
                     </div>
-                    <input
-                        type="text"
-                        name="license"
-                        placeholder={t('form.license.placeholder')}
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-green-500 dark:focus:border-green-500 focus:ring-1 focus:ring-green-500"
-                        required
-                    />
+
+
+                    {!isEmployee && (
+                        <input
+                            type="text"
+                            name="license"
+                            placeholder={t('form.license.placeholder')}
+                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-green-500 dark:focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                            required={!isEmployee}
+                        />
+                    )}
+
+                    <div className="flex items-center">
+                        <input
+                            type="checkbox"
+                            id="isEmployee"
+                            name="isEmployee"
+                            checked={isEmployee}
+                            onChange={(e) => setIsEmployee(e.target.checked)}
+                            className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                        />
+                        <label htmlFor="isEmployee" className="ml-2 block text-sm text-gray-900 dark:text-gray-100">
+                            {t('form.loginAsEmployee')}
+                        </label>
+                    </div>
                     <button
                         type="submit"
                         disabled={isLoading}
@@ -135,7 +154,7 @@ const Login = () => {
                         )}
                     </button>
                 </form>
-            </div> 
+            </div>
         </div>
     );
 };

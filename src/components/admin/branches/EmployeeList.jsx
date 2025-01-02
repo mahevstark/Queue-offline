@@ -3,6 +3,7 @@ import { UserPlusIcon, UserMinusIcon, XMarkIcon, MagnifyingGlassIcon, ArrowPathI
 import toast from 'react-hot-toast';
 import branchService from '@/services/branchService';
 import { useTranslations } from 'next-intl';
+import ConfirmationModal from '@/components/ui/ConfirmationModal';
 
 export default function EmployeeList({
     branchId,
@@ -16,6 +17,8 @@ export default function EmployeeList({
     const [loading, setLoading] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [employeeToDelete, setEmployeeToDelete] = useState(null);
 
     // Filter and search functionality
     const filteredEmployees = useMemo(() => {
@@ -55,14 +58,15 @@ export default function EmployeeList({
     };
 
     const handleRemove = async (employeeId) => {
-        if (!confirm(t('modal.confirmRemove'))) {
-            return;
-        }
+        setEmployeeToDelete(employeeId);
+        setShowDeleteModal(true);
+    };
 
+    const confirmDelete = async () => {
         try {
             setLoading(true);
-            setSelectedEmployee(employeeId);
-            await branchService.removeEmployeeFromBranch(branchId, employeeId);
+            setSelectedEmployee(employeeToDelete);
+            await branchService.removeEmployeeFromBranch(branchId, employeeToDelete);
             
             if (typeof onEmployeeUpdate === 'function') {
                 await onEmployeeUpdate();
@@ -75,6 +79,8 @@ export default function EmployeeList({
         } finally {
             setLoading(false);
             setSelectedEmployee(null);
+            setShowDeleteModal(false);
+            setEmployeeToDelete(null);
         }
     };
 
@@ -233,13 +239,11 @@ export default function EmployeeList({
                                             >
                                                 {loading && selectedEmployee === employee.id ? (
                                                     <span className="flex items-center">
-                                                        <ArrowPathIcon className="h-4 w-4 mr-1 animate-spin" />
-                                                        {t('buttons.adding')}
+                                                        <ArrowPathIcon className="h-4 w-4 animate-spin" />
                                                     </span>
                                                 ) : (
                                                     <span className="flex items-center w-fit">
-                                                        <UserPlusIcon className="h-4 w-4 mr-1" />
-                                                        {t('buttons.add')}
+                                                        <UserPlusIcon className="h-4 w-4" />
                                                     </span>
                                                 )}
                                             </button>
@@ -261,6 +265,19 @@ export default function EmployeeList({
                     </div>
                 </div>
             )}
+
+            <ConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={() => {
+                    setShowDeleteModal(false);
+                    setEmployeeToDelete(null);
+                }}
+                onConfirm={confirmDelete}
+                title={t('modal.removeTitle')}
+                message={t('modal.confirmRemove')}
+                confirmText={t('buttons.remove')}
+                confirmButtonClass="bg-red-600 hover:bg-red-700"
+            />
         </div>
     );
 }
