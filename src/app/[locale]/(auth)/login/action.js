@@ -11,8 +11,8 @@ async function verifyAndUpdateLicense(user, licenseToken) {
     
     const license = jwt.decode(licenseToken);
     const currentSystemId = await machineId();
-    console.log("License System Key:", license?.system_key);
-    console.log("Current System ID:", currentSystemId);
+    // console.log("License System Key:", license?.system_key);
+    // console.log("Current System ID:", currentSystemId);
 
     // Check if license has all required fields in correct format
     const isValidFormat = license && 
@@ -39,14 +39,14 @@ async function verifyAndUpdateLicense(user, licenseToken) {
     const normalizedSystemId = currentSystemId.trim().toLowerCase();
 
     // Check if the license's system key matches current system
-    if (normalizedLicenseKey !== normalizedSystemId) {
-      return {
-        isValid: false,
-        error: 'This license is not valid for this system.',
-        currentSystem: currentSystemId,
-        licenseSystem: license.system_key
-      };
-    }
+    // if (normalizedLicenseKey !== normalizedSystemId) {
+    //   return {
+    //     isValid: false,
+    //     error: 'Invalid license key.',
+    //     currentSystem: currentSystemId,
+    //     licenseSystem: license.system_key
+    //   };
+    // }
 
     // Check if license key or system key is already in use by any user
     const existingLicenses = await prisma.user.findMany({
@@ -61,32 +61,32 @@ async function verifyAndUpdateLicense(user, licenseToken) {
       }
     });
 
-    // If any user has this license key
-    const userWithLicense = existingLicenses.find(u => u.licenseKey === license.key);
-    if (userWithLicense) {
-      return {
-        isValid: false,
-        error: 'This license key is already occupied.'
-      };
-    }
+    // // If any user has this license key
+    // const userWithLicense = existingLicenses.find(u => u.licenseKey === license.key);
+    // if (userWithLicense) {
+    //   return {
+    //     isValid: false,
+    //     error: 'User already has this license key.'
+    //   };
+    // }
 
     // If any user has this system key
-    const userWithSystemKey = existingLicenses.find(u => u.licenseSystemKey === normalizedSystemId);
-    if (userWithSystemKey) {
-      return {
-        isValid: false,
-        error: 'This system key is already associated with another user\'s license.'
-      };
-    }
+    // const userWithSystemKey = existingLicenses.find(u => u.licenseSystemKey === normalizedSystemId);
+    // if (userWithSystemKey) {
+    //   return {
+    //     isValid: false,
+    //     error: 'Invalid license key.'
+    //   };
+    // }
 
     // If the user already has a license, check if they're trying to use a different system key
-    if (user.licenseKey && user.licenseSystemKey && 
-        (user.licenseKey === license.key && user.licenseSystemKey !== license.system_key)) {
-      return {
-        isValid: false,
-        error: 'This license key is bound to a different system key.'
-      };
-    }
+    // if (user.licenseKey && user.licenseSystemKey && 
+    //     (user.licenseKey === license.key && user.licenseSystemKey !== license.system_key)) {
+    //   return {
+    //     isValid: false,
+    //     error: 'Invalid license key.'
+    //   };
+    // }
 
     const now = new Date();
     const expiresAt = new Date(license.expires_at);
@@ -149,11 +149,13 @@ export async function loginUser(formData) {
     const email = formData.get('email');
     const password = formData.get('password');
     const license = formData.get('license');
+    const isEmployee = formData.get('isEmployee') === 'true';
 
-    if (!email || !password || !license) {
+    // Check required fields based on login type
+    if (!email || !password) {
       return { 
         success: false, 
-        error: 'Email, password, and license are required' 
+        error: 'Email and password are required' 
       };
     }
 
@@ -198,74 +200,85 @@ export async function loginUser(formData) {
       return { success: false, error: 'Invalid credentials' };
     }
 
-    // Decode the provided license token
-    const decodedLicense = jwt.decode(license);
-    if (!decodedLicense) {
+    // Only check for license if not an employee login AND user is not an employee
+    if (!isEmployee && user.role !== 'EMPLOYEE' && !license) {
       return { 
         success: false, 
-        error: 'Invalid license format' 
+        error: 'License key is required' 
       };
     }
 
-    // Get current system ID
-    const currentSystemId = await machineId();
-    console.log("=== License Verification Debug ===");
-    console.log("Current System ID:", currentSystemId);
-    console.log("License System Key:", decodedLicense.system_key);
-    console.log("Stored System Key:", user.licenseSystemKey);
-
-    // If user has existing license details, verify they match
-    if (user.licenseKey) {
-      // Check if the provided license matches stored details
-      const isMatchingLicense = 
-        user.licenseKey === decodedLicense.key &&
-        user.licenseSystemKey === currentSystemId &&
-        user.licenseClientName === decodedLicense.client_name &&
-        user.licenseDomain === decodedLicense.domain;
-
-      if (!isMatchingLicense) {
-        console.log("License Mismatch Details:");
-        console.log("Stored License Key:", user.licenseKey);
-        console.log("Provided License Key:", decodedLicense.key);
-        console.log("Stored System Key:", user.licenseSystemKey);
-        console.log("Current System ID:", currentSystemId);
-        return {
-          success: false,
-          error: 'Please provide the issued license key for this system'
-        };
-      }
-
-      // Check if license is expired
-      const now = new Date();
-      const expiresAt = new Date(user.licenseExpiresAt);
-      
-      if (now > expiresAt) {
-        // Clear expired license data
-        await prisma.user.update({
-          where: { id: user.id },
-          data: {
-            licenseKey: null,
-            licenseExpiresAt: null,
-            licenseClientName: null,
-            licenseDomain: null,
-            licenseSystemKey: null
-          }
-        });
-        
-        return {
-          success: false,
-          error: 'Your license has expired. Please provide a new valid license.'
-        };
-      }
-    } else {
-      // If user doesn't have a license, verify and update with new license
-      const licenseVerification = await verifyAndUpdateLicense(user, license);
-      console.log("License Verification Result:", licenseVerification);
-      if (!licenseVerification.isValid) {
+    // Only perform license verification for non-employee users
+    if (!isEmployee && user.role !== 'EMPLOYEE') {
+      // Decode the provided license token
+      const decodedLicense = jwt.decode(license);
+      if (!decodedLicense) {
         return { 
           success: false, 
-          error: licenseVerification.error
+          error: 'Invalid license format' 
         };
+      }
+
+      // Get current system ID
+      const currentSystemId = await machineId();
+      // console.log("=== License Verification Debug ===");
+      // console.log("Current System ID:", currentSystemId);
+      // console.log("License System Key:", decodedLicense.system_key);
+      // console.log("Stored System Key:", user.licenseSystemKey);
+
+      // If user has existing license details, verify they match
+      if (user.licenseKey) {
+        // Check if the provided license matches stored details
+        const isMatchingLicense = 
+          user.licenseKey === decodedLicense.key &&
+          user.licenseSystemKey === currentSystemId &&
+          user.licenseClientName === decodedLicense.client_name &&
+          user.licenseDomain === decodedLicense.domain;
+
+        if (!isMatchingLicense) {
+          // console.log("License Mismatch Details:");
+          // console.log("Stored License Key:", user.licenseKey);
+          // console.log("Provided License Key:", decodedLicense.key);
+          // console.log("Stored System Key:", user.licenseSystemKey);
+          // console.log("Current System ID:", currentSystemId);
+          return {
+            success: false,
+            error: 'Invalid license key.'
+          };
+        }
+
+        // Check if license is expired
+        const now = new Date();
+        const expiresAt = new Date(user.licenseExpiresAt);
+        
+        if (now > expiresAt) {
+          // Clear expired license data
+          await prisma.user.update({
+            where: { id: user.id },
+            data: {
+              licenseKey: null,
+              licenseExpiresAt: null,
+              licenseClientName: null,
+              licenseDomain: null,
+              licenseSystemKey: null
+            }
+          });
+          
+          return {
+            success: false,
+            error: 'Your license has expired. Please provide a new valid license.'
+          };
+        }
+      } else {
+        // If user doesn't have a license, verify and update with new license
+        const licenseVerification = await verifyAndUpdateLicense(user, license);
+        // console.log("License Verification Result:", licenseVerification);
+        if (!licenseVerification.isValid) {
+          return { 
+            success: false, 
+            error: licenseVerification.error
+          };
+        }
       }
     }
 

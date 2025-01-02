@@ -1442,7 +1442,8 @@
         "submit": {
             "default": "Sign in",
             "loading": "Signing in..."
-        }
+        },
+        "loginAsEmployee": "Login as Employee"
     },
     "notifications": {
         "success": "Successfully logged in",

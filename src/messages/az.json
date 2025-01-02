@@ -1435,7 +1435,8 @@
       "submit": {
         "default": "Daxil ol",
         "loading": "Daxil olunur..."
-      }
+      },
+      "loginAsEmployee": "İşçi kimi daxil ol"
     },
     "notifications": {
       "success": "Uğurla daxil oldunuz",
