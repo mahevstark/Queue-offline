@@ -21,7 +21,6 @@ async function verifyAndUpdateLicense(user, licenseToken) {
       typeof license.key === 'string' &&
       license.key.startsWith('LIC-') &&
       typeof license.client_name === 'string' &&
-      typeof license.domain === 'string' &&
       typeof license.issued_at === 'string' &&
       typeof license.expires_at === 'string' &&
       typeof license.status === 'string' &&
@@ -37,16 +36,18 @@ async function verifyAndUpdateLicense(user, licenseToken) {
     // Normalize both system keys by trimming and converting to lowercase
     const normalizedLicenseKey = license.system_key.trim().toLowerCase();
     const normalizedSystemId = currentSystemId.trim().toLowerCase();
+    console.log("Normalized License Key:", normalizedLicenseKey);
+    console.log("Normalized System ID:", normalizedSystemId);
 
     // Check if the license's system key matches current system
-    // if (normalizedLicenseKey !== normalizedSystemId) {
-    //   return {
-    //     isValid: false,
-    //     error: 'Invalid license key.',
-    //     currentSystem: currentSystemId,
-    //     licenseSystem: license.system_key
-    //   };
-    // }
+    if (normalizedLicenseKey !== normalizedSystemId) {
+      return {
+        isValid: false,
+        error: 'Invalid license key.',
+        currentSystem: currentSystemId,
+        licenseSystem: license.system_key
+      };
+    }
 
     // Check if license key or system key is already in use by any user
     const existingLicenses = await prisma.user.findMany({
@@ -80,13 +81,13 @@ async function verifyAndUpdateLicense(user, licenseToken) {
     // }
 
     // If the user already has a license, check if they're trying to use a different system key
-    // if (user.licenseKey && user.licenseSystemKey && 
-    //     (user.licenseKey === license.key && user.licenseSystemKey !== license.system_key)) {
-    //   return {
-    //     isValid: false,
-    //     error: 'Invalid license key.'
-    //   };
-    // }
+    if (user.licenseKey && user.licenseSystemKey && 
+        (user.licenseKey === license.key && user.licenseSystemKey !== license.system_key)) {
+      return {
+        isValid: false,
+        error: 'Invalid license key.'
+      };
+    }
 
     const now = new Date();
     const expiresAt = new Date(license.expires_at);
@@ -232,9 +233,7 @@ export async function loginUser(formData) {
         const isMatchingLicense = 
           user.licenseKey === decodedLicense.key &&
           user.licenseSystemKey === currentSystemId &&
-          user.licenseClientName === decodedLicense.client_name &&
-          user.licenseDomain === decodedLicense.domain;
-
+          user.licenseClientName === decodedLicense.client_name
         if (!isMatchingLicense) {
           // console.log("License Mismatch Details:");
           // console.log("Stored License Key:", user.licenseKey);
