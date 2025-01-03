@@ -191,12 +191,14 @@ export function UserProvider({ children }) {
     // Add effect for periodic license checks
     useEffect(() => {
         if (user) {
-            // Check license every 12 hours
-            const licenseCheckInterval = setInterval(() => {
-                checkLicense();
-            }, 12 * 60 * 60 * 1000);
-
-            return () => clearInterval(licenseCheckInterval);
+            if(user.role === 'MANAGER'){
+                // Check license every 12 hours
+                const licenseCheckInterval = setInterval(() => {
+                    checkLicense();
+                }, 12 * 60 * 60 * 1000);
+                
+                return () => clearInterval(licenseCheckInterval);
+            }
         }
     }, [user]);
 

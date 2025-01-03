@@ -13,7 +13,7 @@
       "displayScreen": "Ekran Görüntüsü",
       "deskScreens": "Masa Ekranları",
       "employeeDashboard": "Əməkdaş Paneli",
-      "numerators": "Nömrələyicilər",
+      "numerators": "Interval Number Generasiya",
       "branches": "Filiallar",
       "myBranch": "Mənim Filialım"
     },
@@ -940,6 +940,7 @@
       "manager": "Filialınızın masa ekranlarını idarə edin və izləyin",
       "admin": "Bütün filiallardakı masa ekranlarını idarə edin və izləyin"
     },
+  
     "stats": {
       "activeDesks": "Aktiv Masaların Cəmi"
     },
@@ -963,6 +964,7 @@
       }
     },
     "noBranches": {
+      "noDesks": "Bu filialda aktiv masa yoxdur",
       "assigned": "Sizə təyin edilmiş filial yoxdur",
       "filtered": "Axtarış kriteriyalarına uyğun filial tapılmadı"
     },
@@ -978,6 +980,7 @@
       "title": "Təyin Edilmiş İşçi Yoxdur",
       "description": "Bu masaya hal-hazırda heç bir işçi təyin edilməyib."
     },
+    
     "table": {
       "headers": {
         "employee": "İşçi",

@@ -57,7 +57,7 @@ export async function GET(request) {
                 error: 'User not found' 
             }, { status: 404 });
         }
-
+        if(user.role === 'MANAGER'){
         // Verify license
         if (!user.licenseKey || !user.licenseExpiresAt) {
             return NextResponse.json({
@@ -74,6 +74,7 @@ export async function GET(request) {
                 success: false,
                 error: 'License has expired'
             }, { status: 401 });
+            }
         }
 
         return NextResponse.json({ 

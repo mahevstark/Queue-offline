@@ -13,7 +13,7 @@
             "displayScreen": "Display Screen",
             "employeeDashboard": "Employee Dashboard",
             "deskScreens": "Desk Screens",
-            "numerators": "Numerators",
+            "numerators": "Generate Interval",
             "branches": "Branches",
             "myBranch": "My Branch"
         },
@@ -989,7 +989,9 @@
     },
     "noBranches": {
         "assigned": "No branch assigned to you",
-        "filtered": "No branches found matching your criteria"
+        "filtered": "No branches found matching your criteria",
+        "noDesks": "No active desks in this branch"
+
     },
     "notifications": {
         "fetchError": "Failed to fetch branches",
@@ -1003,6 +1005,7 @@
         "title": "No Employees Assigned",
         "description": "This desk currently has no employees assigned to it."
     },
+
     "table": {
         "headers": {
             "employee": "Employee",
