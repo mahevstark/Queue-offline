@@ -63,7 +63,7 @@ export async function middleware(request) {
   if (isPublicPath) {
     if ((pathWithoutLocale === '/login' || pathWithoutLocale === '/register') && token) {
       try {
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+        const secret = new TextEncoder().encode("d7ac385848b71c3131f75cd0fcd8956d9280a575425fa131b30ccb4c4e161ce5");
         const verified = await jose.jwtVerify(token.value, secret);
         const userRole = verified.payload.role;
 
@@ -90,7 +90,7 @@ export async function middleware(request) {
       return NextResponse.redirect(new URL(`/en/login`, request.url));
     }
     try {
-      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+      const secret = new TextEncoder().encode("d7ac385848b71c3131f75cd0fcd8956d9280a575425fa131b30ccb4c4e161ce5");
       const verified = await jose.jwtVerify(token.value, secret);
       const userRole = verified.payload.role;
 
@@ -113,7 +113,7 @@ export async function middleware(request) {
   }
 
   try {
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const secret = new TextEncoder().encode("d7ac385848b71c3131f75cd0fcd8956d9280a575425fa131b30ccb4c4e161ce5");
     const verified = await jose.jwtVerify(token.value, secret);
     const userRole = verified.payload.role;
 
