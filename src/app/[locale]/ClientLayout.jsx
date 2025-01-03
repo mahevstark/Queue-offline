@@ -241,7 +241,7 @@ function Header() {
     return (
         <header
             className={`fixed top-0 right-0 z-10 shadow-sm bg-background dark:bg-gray-800 px-6 py-4 flex justify-between items-center transition-all duration-300
-                ${expanded ? 'left-64' : 'left-20'}`}
+                ${user.role === 'EMPLOYEE' ? 'left-0' : expanded ? 'left-64' : 'left-20'}`}
         >
             <h1 className="text-xl font-semibold text-primaryGreen dark:text-white capitalize">
                 {title}
@@ -318,12 +318,14 @@ export default function ClientLayout({ children }) {
     return (
         <SidebarContext.Provider value={{ expanded, setExpanded }}>
             <div className="flex min-h-screen bg-background dark:bg-gray-900">
-                {user && ( // Only show sidebar if user is logged in
+                {user && user.role !== 'EMPLOYEE' && ( // Only show sidebar if user is logged in and not an employee
                     <div className="fixed left-0 z-50 top-0 h-full">
                         <Sidebar handleLogout={handleLogout}/>
                     </div>
                 )}
-                <div className={`flex-1 transition-all duration-300 ${user && expanded ? 'ml-64' : user ? 'ml-20' : ''}`}>
+                <div className={`flex-1 transition-all duration-300 ${
+                    user && user.role !== 'EMPLOYEE' ? (expanded ? 'ml-64' : 'ml-20') : ''
+                }`}>
                     <Header />
                     <main className={`flex-1 p-6 space-y-6 ${user ? 'mt-16' : ''}`}>
                         {children}

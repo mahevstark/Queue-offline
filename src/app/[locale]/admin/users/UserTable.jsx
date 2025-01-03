@@ -95,7 +95,14 @@ export function UserTable({
                 </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-                {users.map((user) => (
+            {users.length === 0 ? (
+                    <tr>
+                        <td colSpan="6" className="px-6 py-4 text-center text-sm text-gray-500">
+                            {t('noUsers')}
+                        </td>
+                    </tr>
+                ) : (
+                users.map((user) => (
                     <tr key={user.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm font-medium text-gray-900">
@@ -229,7 +236,8 @@ export function UserTable({
                             </div>
                         </td>
                     </tr>
-                ))}
+                ))
+            )}
             </tbody>
         </table>
     );

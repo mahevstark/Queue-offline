@@ -70,8 +70,6 @@ export async function middleware(request) {
         switch (userRole) {
           case 'MANAGER':
             return NextResponse.redirect(new URL(`/${currentLocale}/dashboard`, request.url));
-          case 'SUPERADMIN':
-            return NextResponse.redirect(new URL(`/${currentLocale}/admin/branches`, request.url));
           case 'EMPLOYEE':
             return NextResponse.redirect(new URL(`/${currentLocale}/employee-dashboard`, request.url));
           default:
@@ -101,8 +99,6 @@ export async function middleware(request) {
           return NextResponse.redirect(new URL(`/${currentLocale}/dashboard`, request.url));
         case 'EMPLOYEE':
           return NextResponse.redirect(new URL(`/${currentLocale}/employee-dashboard`, request.url));
-        case 'SUPERADMIN':
-          return NextResponse.redirect(new URL(`/${currentLocale}/admin/branches`, request.url));
         default:
           return NextResponse.redirect(new URL(`/${currentLocale}/login`, request.url));
       }
@@ -130,15 +126,13 @@ export async function middleware(request) {
         break;
 
       case pathWithoutLocale === '/employee-dashboard':
-        if (userRole === 'SUPERADMIN') {
-          return NextResponse.redirect(new URL(`/${currentLocale}/admin/branches`, request.url));
-        }
+       
         if (userRole === 'MANAGER') {
           return NextResponse.redirect(new URL(`/${currentLocale}/dashboard`, request.url));
         }
         break;
 
-      // User Logs (SUPERADMIN, ADMIN and MANAGER only)
+      // User Logs ( MANAGER only)
       case pathWithoutLocale.match(/^\/user-logs\/[^/]+$/):
         if (userRole === 'EMPLOYEE') {
           return NextResponse.redirect(new URL(`/${currentLocale}/employee-dashboard`, request.url));
@@ -153,7 +147,7 @@ export async function middleware(request) {
 
         // Branch-specific routes that only managers can access
         if (pathWithoutLocale.match(/^\/admin\/branches\/[\w-]+\/(services|users|desks|token-series)/)) {
-          if (userRole !== 'MANAGER' && userRole !== 'SUPERADMIN') {
+          if (userRole !== 'MANAGER') {
             // For API routes, return 403 instead of redirecting
             if (pathWithoutLocale.startsWith('/api/')) {
               return new NextResponse(
@@ -171,7 +165,7 @@ export async function middleware(request) {
 
         // General branches routes
         if (pathWithoutLocale.startsWith('/admin/branches')) {
-          if (userRole !== 'MANAGER' && userRole !== 'SUPERADMIN') {
+          if (userRole !== 'MANAGER') {
             // For API routes, return 403 instead of redirecting
             if (pathWithoutLocale.startsWith('/api/')) {
               return new NextResponse(
@@ -198,7 +192,7 @@ export async function middleware(request) {
 
         // If it's a protected route (services, users, desks, tokens)
         if (isServiceRoute || isUserRoute || isDeskRoute || isTokenRoute) {
-          if (userRole !== 'MANAGER' && userRole !== 'SUPERADMIN') {
+          if (userRole !== 'MANAGER') {
             return new NextResponse(
               JSON.stringify({ error: 'Unauthorized access' }),
               {
@@ -209,8 +203,8 @@ export async function middleware(request) {
           }
         }
 
-        // For other branch routes, allow both SUPERADMIN and MANAGER
-        if (userRole !== 'MANAGER' && userRole !== 'SUPERADMIN') {
+        // For other branch routes, allow MANAGER
+        if (userRole !== 'MANAGER') {
           return new NextResponse(
             JSON.stringify({ error: 'Unauthorized access' }),
             {

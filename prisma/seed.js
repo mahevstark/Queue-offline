@@ -4,31 +4,43 @@ const bcrypt = require('bcrypt')
 const prisma = new PrismaClient()
 
 async function main() {
-  // Check if superadmin exists
-  const existingSuperAdmin = await prisma.user.findFirst({
+  // Check if manager exists
+  const existingManager = await prisma.user.findFirst({
     where: {
-      role: 'SUPERADMIN'
+      role: 'MANAGER'
     }
   })
 
-  if (!existingSuperAdmin) {
-    // Create superadmin if doesn't exist
-    const hashedPassword = await bcrypt.hash('@dmin@super321', 10) // Change this password
+  if (!existingManager) {
+    // Create a branch first
+    const branch = await prisma.branch.create({
+      data: {
+        name: 'My Branch',
+        status: 'ACTIVE',
+      }
+    })
+
+    // Create manager if doesn't exist
+    const hashedPassword = await bcrypt.hash('A!P0w3rful&Ungue$$abw0rd!', 10)
     
     await prisma.user.create({
       data: {
-        fullName: 'Super Admin',
-        email: 'superadmin@gmail.com', 
+        fullName: 'Admin',
+        email: 'admin@queuesystem.com', 
         password: hashedPassword,
-        role: 'SUPERADMIN',
+        role: 'MANAGER',
         status: 'ACTIVE',
-        isAvailable: true
+        isAvailable: true,
+        managedBranch: {
+          connect: {
+            id: branch.id
+          }
+        }
       }
     })
-    
-    console.log('Superadmin created successfully')
+    console.log('Manager and branch created successfully')
   } else {
-    console.log('Superadmin already exists')
+    console.log('Manager already exists')
   }
 }
 
