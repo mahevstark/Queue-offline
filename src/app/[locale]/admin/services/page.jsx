@@ -169,7 +169,7 @@ export default function ServicesPage() {
     };
 
     if (loading) return <LoadingSpinner />;
-    if (error) return <div>Error: {error}</div>;
+    if (error) return <div className="text-center text-lg ">{error}</div>;
 
     return (
         <div className="flex-1  bg-white rounded-lg shadow-sm py-4 h-[calc(100vh-100px)] px-4">
