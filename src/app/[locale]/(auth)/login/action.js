@@ -8,16 +8,20 @@ import { exec } from 'child_process';
 async function getSystemId() {
   const command = `powershell -Command "Get-WmiObject -Class Win32_ComputerSystemProduct | Select-Object -ExpandProperty UUID"`;
 
-  exec(command, (error, stdout, stderr) => {
-      if (error) {
-          console.error('Error fetching UUID:', error);
-          return;
-      }
-      // Parse the output to extract the UUID
-      const uuid = stdout.trim(); // Trim spaces
-      console.log('UUID:', uuid);
+  return new Promise((resolve, reject) => {
+      exec(command, (error, stdout, stderr) => {
+          if (error) {
+              console.error('Error fetching UUID:', error);
+              reject(error);
+              return;
+          }
+          const id = stdout.trim(); // Trim spaces
+          console.log('UUID:', id);
+          resolve(id);
+      });
   });
 }
+ 
 
 async function verifyAndUpdateLicense(user, licenseToken) {
   try {
@@ -34,8 +38,6 @@ async function verifyAndUpdateLicense(user, licenseToken) {
     const isValidFormat = license &&
       typeof license === 'object' &&
       typeof license.id === 'string' &&
-      typeof license.key === 'string' &&
-      license.key.startsWith('LIC-') &&
       typeof license.client_name === 'string' &&
       typeof license.issued_at === 'string' &&
       typeof license.expires_at === 'string' &&
@@ -49,7 +51,13 @@ async function verifyAndUpdateLicense(user, licenseToken) {
         error: 'Invalid license format. Please enter a valid license key.'
       };
     }
-
+    console.log("currentSystemId", currentSystemId)
+    if(currentSystemId === undefined){
+      return {
+        success: false,
+        error: "System ID not defiend"
+      }
+    }
     // Normalize both system keys by trimming and converting to lowercase
     const normalizedLicenseKey = license.system_key.trim().toLowerCase();
     const normalizedSystemId = currentSystemId.trim().toLowerCase();
@@ -67,17 +75,17 @@ async function verifyAndUpdateLicense(user, licenseToken) {
     }
 
     // Check if license key or system key is already in use by any user
-    const existingLicenses = await prisma.user.findMany({
-      where: {
-        OR: [
-          { licenseKey: license.key },
-          { licenseSystemKey: normalizedSystemId }
-        ],
-        NOT: {
-          id: user.id
-        }
-      }
-    });
+    // const existingLicenses = await prisma.user.findMany({
+    //   where: {
+    //     OR: [
+    //       { licenseKey: license.key },
+    //       { licenseSystemKey: normalizedSystemId }
+    //     ],
+    //     NOT: {
+    //       id: user.id
+    //     }
+    //   }
+    // });
 
     // // If any user has this license key
     // const userWithLicense = existingLicenses.find(u => u.licenseKey === license.key);
@@ -97,14 +105,14 @@ async function verifyAndUpdateLicense(user, licenseToken) {
     //   };
     // }
 
-    // If the user already has a license, check if they're trying to use a different system key
-    if (user.licenseKey && user.licenseSystemKey &&
-      (user.licenseKey === license.key && user.licenseSystemKey !== license.system_key)) {
-      return {
-        isValid: false,
-        error: 'Invalid license key.'
-      };
-    }
+    // If the user already has a license, check if they're trying to use a different system 
+
+    // if (user.licenseSystemKey !== license.system_key) {
+    //   return {
+    //     isValid: false,
+    //     error: 'Invalid license key.'
+    //   };
+    // }
 
     const now = new Date();
     const expiresAt = new Date(license.expires_at);
@@ -112,7 +120,7 @@ async function verifyAndUpdateLicense(user, licenseToken) {
     // Check if license is expired
     if (now > expiresAt) {
       // If this is the same expired license the user had before, prevent reuse
-      if (user.licenseKey === license.key && user.licenseExpiresAt) {
+      if (user.licenseSystemKey === license.system_key && user.licenseExpiresAt) {
         const previousExpiryDate = new Date(user.licenseExpiresAt);
         if (previousExpiryDate.getTime() === expiresAt.getTime()) {
           return {
@@ -126,7 +134,6 @@ async function verifyAndUpdateLicense(user, licenseToken) {
       await prisma.user.update({
         where: { id: user.id },
         data: {
-          licenseKey: null,
           licenseExpiresAt: null,
           licenseClientName: null,
           licenseDomain: null,
@@ -144,10 +151,8 @@ async function verifyAndUpdateLicense(user, licenseToken) {
     await prisma.user.update({
       where: { id: user.id },
       data: {
-        licenseKey: license.key,
         licenseExpiresAt: new Date(license.expires_at),
         licenseClientName: license.client_name,
-        licenseDomain: license.domain,
         licenseSystemKey: license.system_key
       }
     });
@@ -242,7 +247,7 @@ export async function loginUser(formData) {
       }
 
       // Get current system ID
-      const currentSystemId = await getSystemId();
+      // const currentSystemId = await getSystemId();
       // const currentSystemId = '1234567890';
 
       // console.log("=== License Verification Debug ===");
