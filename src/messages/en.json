@@ -1062,7 +1062,7 @@
         "footer": "Please keep this interval number for your reference"
     },
     "printTicket": {
-        "title": "Queue Soft",
+        "title": "QONTROL -  Queue Software",
         "tokenNo": "Interval Number:",
         "details": {
             "service": "Service:",

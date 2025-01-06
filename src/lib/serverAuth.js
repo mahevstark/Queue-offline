@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { verifyToken } from '@/lib/authService';
 
-const JWT_SECRET = "d7ac385848b71c3131f75cd0fcd8956d9280a575425fa131b30ccb4c4e161ce5";
+const JWT_SECRET = 'd7ac385848b71c3131f75cd0fcd8956d9280a575425fa131b30ccb4c4e161ce5';
 const TOKEN_NAME = 'auth_token';
 
 export const authOptions = {
@@ -70,7 +70,7 @@ export const authOptions = {
     signIn: '/login',
   },
   debug: process.env.NODE_ENV === 'development',
-  secret: "d7ac385848b7176876831f75cd0fcd8956d9280a575425fa131b30ccb4c4e161ce5",
+  secret: 'd7ac385848b7176876831f75cd0fcd8956d9280a575425fa131b30ccb4c4e161ce5',
 };
 
 export const createToken = (payload) => {

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = "d7ac385848b71c3131f75cd0fcd8956d9280a575425fa131b30ccb4c4e161ce5";
+const JWT_SECRET = 'd7ac385848b71c3131f75cd0fcd8956d9280a575425fa131b30ccb4c4e161ce5';
 
 export const verifyToken = (token) => {
   try {
