@@ -6,16 +6,17 @@ import jwt from 'jsonwebtoken';
 import { exec } from 'child_process';
 
 async function getSystemId() {
-  return new Promise((resolve, reject) => {
-    exec('wmic csproduct get uuid', (error, stdout, stderr) => {
+  const command = `powershell -Command "Get-WmiObject -Class Win32_ComputerSystemProduct | Select-Object -ExpandProperty UUID"`;
+
+  exec(command, (error, stdout, stderr) => {
       if (error) {
-        console.error('Error fetching UUID:', error);
-        reject(error);
-        return;
+          console.error('Error fetching UUID:', error);
+          return;
       }
-      const uuid = stdout.split('\n')[1]?.trim();
-      resolve(uuid);
-    });
+      // Parse the output to extract the UUID
+      const uuid = stdout.trim(); // Trim spaces
+      console.log('UUID:', uuid);
+      return uuid;
   });
 }
 
@@ -97,8 +98,7 @@ async function verifyAndUpdateLicense(user, licenseToken) {
     // }
 
     // If the user already has a license, check if they're trying to use a different system key
-    if (user.licenseKey && user.licenseSystemKey && 
-        (user.licenseKey === license.key && user.licenseSystemKey !== license.system_key)) {
+    if (user.licenseSystemKey !== license.system_key){
       return {
         isValid: false,
         error: 'Invalid license key.'
