@@ -63,15 +63,13 @@ export async function middleware(request) {
   if (isPublicPath) {
     if ((pathWithoutLocale === '/login' || pathWithoutLocale === '/register') && token) {
       try {
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+        const secret = new TextEncoder().encode("d7ac385848b71c3131f75cd0fcd8956d9280a575425fa131b30ccb4c4e161ce5");
         const verified = await jose.jwtVerify(token.value, secret);
         const userRole = verified.payload.role;
 
         switch (userRole) {
           case 'MANAGER':
             return NextResponse.redirect(new URL(`/${currentLocale}/dashboard`, request.url));
-          case 'SUPERADMIN':
-            return NextResponse.redirect(new URL(`/${currentLocale}/admin/branches`, request.url));
           case 'EMPLOYEE':
             return NextResponse.redirect(new URL(`/${currentLocale}/employee-dashboard`, request.url));
           default:
@@ -92,7 +90,7 @@ export async function middleware(request) {
       return NextResponse.redirect(new URL(`/en/login`, request.url));
     }
     try {
-      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+      const secret = new TextEncoder().encode("d7ac385848b71c3131f75cd0fcd8956d9280a575425fa131b30ccb4c4e161ce5");
       const verified = await jose.jwtVerify(token.value, secret);
       const userRole = verified.payload.role;
 
@@ -101,8 +99,6 @@ export async function middleware(request) {
           return NextResponse.redirect(new URL(`/${currentLocale}/dashboard`, request.url));
         case 'EMPLOYEE':
           return NextResponse.redirect(new URL(`/${currentLocale}/employee-dashboard`, request.url));
-        case 'SUPERADMIN':
-          return NextResponse.redirect(new URL(`/${currentLocale}/admin/branches`, request.url));
         default:
           return NextResponse.redirect(new URL(`/${currentLocale}/login`, request.url));
       }
@@ -117,7 +113,7 @@ export async function middleware(request) {
   }
 
   try {
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const secret = new TextEncoder().encode("d7ac385848b71c3131f75cd0fcd8956d9280a575425fa131b30ccb4c4e161ce5");
     const verified = await jose.jwtVerify(token.value, secret);
     const userRole = verified.payload.role;
 
@@ -130,15 +126,13 @@ export async function middleware(request) {
         break;
 
       case pathWithoutLocale === '/employee-dashboard':
-        if (userRole === 'SUPERADMIN') {
-          return NextResponse.redirect(new URL(`/${currentLocale}/admin/branches`, request.url));
-        }
+       
         if (userRole === 'MANAGER') {
           return NextResponse.redirect(new URL(`/${currentLocale}/dashboard`, request.url));
         }
         break;
 
-      // User Logs (SUPERADMIN, ADMIN and MANAGER only)
+      // User Logs ( MANAGER only)
       case pathWithoutLocale.match(/^\/user-logs\/[^/]+$/):
         if (userRole === 'EMPLOYEE') {
           return NextResponse.redirect(new URL(`/${currentLocale}/employee-dashboard`, request.url));
@@ -153,7 +147,7 @@ export async function middleware(request) {
 
         // Branch-specific routes that only managers can access
         if (pathWithoutLocale.match(/^\/admin\/branches\/[\w-]+\/(services|users|desks|token-series)/)) {
-          if (userRole !== 'MANAGER' && userRole !== 'SUPERADMIN') {
+          if (userRole !== 'MANAGER') {
             // For API routes, return 403 instead of redirecting
             if (pathWithoutLocale.startsWith('/api/')) {
               return new NextResponse(
@@ -171,7 +165,7 @@ export async function middleware(request) {
 
         // General branches routes
         if (pathWithoutLocale.startsWith('/admin/branches')) {
-          if (userRole !== 'MANAGER' && userRole !== 'SUPERADMIN') {
+          if (userRole !== 'MANAGER') {
             // For API routes, return 403 instead of redirecting
             if (pathWithoutLocale.startsWith('/api/')) {
               return new NextResponse(
@@ -198,7 +192,7 @@ export async function middleware(request) {
 
         // If it's a protected route (services, users, desks, tokens)
         if (isServiceRoute || isUserRoute || isDeskRoute || isTokenRoute) {
-          if (userRole !== 'MANAGER' && userRole !== 'SUPERADMIN') {
+          if (userRole !== 'MANAGER') {
             return new NextResponse(
               JSON.stringify({ error: 'Unauthorized access' }),
               {
@@ -209,8 +203,8 @@ export async function middleware(request) {
           }
         }
 
-        // For other branch routes, allow both SUPERADMIN and MANAGER
-        if (userRole !== 'MANAGER' && userRole !== 'SUPERADMIN') {
+        // For other branch routes, allow MANAGER
+        if (userRole !== 'MANAGER') {
           return new NextResponse(
             JSON.stringify({ error: 'Unauthorized access' }),
             {

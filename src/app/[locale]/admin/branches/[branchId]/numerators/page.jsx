@@ -203,7 +203,6 @@ export default function NumeratorManagerPage() {
                         className="pl-10 w-full md:w-1/2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primaryGreen outline-none"
                     />
                 </div>
-
                 {/* Numerators Table */}
                 <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">

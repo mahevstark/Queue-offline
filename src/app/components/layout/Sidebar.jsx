@@ -12,7 +12,8 @@ import {
     ChevronRightIcon,
     UserCircleIcon,
     CalculatorIcon,
-    MapPinIcon
+    MapPinIcon,
+    NumberedListIcon
 } from '@heroicons/react/24/outline';
 import { ComputerIcon, LogOutIcon, ScreenShare } from 'lucide-react';
 import { WrenchScrewdriverIcon } from '@heroicons/react/24/solid';
@@ -22,6 +23,7 @@ export default function Sidebar({ handleLogout }) {
     const { expanded, setExpanded } = useSidebar();
     const { user } = useAuth();
     const t = useTranslations('sidebar');
+    const s = useTranslations('branches');
 
     // Define navigation items with role restrictions
     const navigationItems = [
@@ -30,13 +32,6 @@ export default function Sidebar({ handleLogout }) {
             href: '/dashboard', 
             Icon: HomeIcon,
             roles: ['MANAGER']
-        },
-        { 
-            name: t('navigation.users'), 
-            href: '/admin/users', 
-            Icon: UsersIcon,
-            roles: ['SUPERADMIN'],
-            isActive: (path) => path.includes('/admin/users') || path.includes('/admin/user-logs')
         },
         { 
             name: t('navigation.employees'), 
@@ -49,66 +44,58 @@ export default function Sidebar({ handleLogout }) {
             name: t('navigation.services'), 
             href: '/admin/services', 
             Icon: WrenchScrewdriverIcon,
-            roles: ['SUPERADMIN', 'MANAGER']
+            roles: ['MANAGER']
+        },
+        { 
+            name: s('actions.desks'), 
+            href: `/admin/branches/${user?.branchId}/desks`, 
+            Icon: ComputerIcon,
+            roles: ['MANAGER']
+        },
+        { 
+            name: s('actions.tokenSeries'), 
+            href: `/admin/branches/${user?.branchId}/token-series`, 
+            Icon: NumberedListIcon,
+            roles: ['MANAGER']
+        },
+        { 
+            name: s('actions.manageNumerators'), 
+            href: `/admin/branches/${user?.branchId}/numerators`, 
+            Icon: CalculatorIcon,
+            roles: ['MANAGER'],
+            isActive: (path) => path.includes(`/admin/branches/${user?.branchId}/numerators`)
+        },
+        ,{
+            name: t('navigation.numerators'),
+            href: '/numerators',
+            Icon: CalculatorIcon,
+            roles: ['MANAGER'],
+            isActive: (path) => path.includes('en/numerators') || path.includes('az/numerators') 
         },
         {
             name: t('navigation.displayScreen'),
-            href: '/display-screen',
+            href: `/display-screen/${user?.branchId}`,
             Icon: ScreenShare,
-            roles: [ 'SUPERADMIN', 'MANAGER']
+            roles: ['MANAGER']
+        },
+        {
+            name: t('navigation.deskScreens'),
+            href: '/desk-screens',
+            Icon: ComputerIcon,
+            roles: ['MANAGER'],
         },
         {
             name: t('navigation.employeeDashboard'),
             href: '/employee-dashboard',
             Icon: UserCircleIcon,
             roles: ['EMPLOYEE'],
-        },
-        {
-            name: t('navigation.deskScreens'),
-            href: '/desk-screens',
-            Icon: ComputerIcon,
-            roles: ['SUPERADMIN', 'MANAGER'],
-        },
-        {
-            name: t('navigation.numerators'),
-            href: '/numerators',
-            Icon: CalculatorIcon,
-            roles: ['SUPERADMIN', 'MANAGER']
         }
     ];
 
-    // Get branch navigation item based on user role
-    const getBranchNavItem = () => {
-        if (user?.role === 'SUPERADMIN') {
-            return {
-                name: t('navigation.branches'),
-                href: '/admin/branches',
-                Icon: MapPinIcon,
-                roles: ['SUPERADMIN']
-            };
-        } else if (user?.role === 'MANAGER') {
-            return {
-                name: t('navigation.myBranch'),
-                href: '/admin/branches',
-                Icon: BuildingOffice2Icon,
-                roles: ['MANAGER']
-            };
-        }
-        return null;
-    };
-
-    // Filter navigation items based on user role and add branch item
-    const authorizedNavigation = [
-        ...navigationItems.filter(item => 
-            user?.role && item.roles.includes(user.role)
-        )
-    ];
-
-    // Insert branch item after Dashboard if it exists
-    const branchItem = getBranchNavItem();
-    if (branchItem) {
-        authorizedNavigation.splice(1, 0, branchItem);
-    }
+    // Filter navigation items based on user role
+    const authorizedNavigation = navigationItems.filter(item => 
+        user?.role && item.roles.includes(user.role)
+    );
 
     return (
         <aside 
