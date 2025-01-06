@@ -17,6 +17,8 @@ import {
 } from '@heroicons/react/24/outline';
 import { ComputerIcon, LogOutIcon, ScreenShare } from 'lucide-react';
 import { WrenchScrewdriverIcon } from '@heroicons/react/24/solid';
+import Image from 'next/image';
+import logo from '@/assests/white.png';
 
 export default function Sidebar({ handleLogout }) {
     const pathname = usePathname();
@@ -105,7 +107,9 @@ export default function Sidebar({ handleLogout }) {
         >
             {/* Logo Section */}
             <div className={`p-6 text-lg font-bold flex items-center justify-between`}>
-                {expanded && <span>{t('title')}</span>}
+                {expanded && <div className="flex items-center overflow-hidden h-[50px] w-[190px] justify-center relative">
+                    <Image src={logo} alt="Logo" height={50} width={190} className="object-contain"/>
+                </div>}
                 <button
                     onClick={() => setExpanded(!expanded)}
                     className="p-1.5 rounded-lg bg-primaryOrange hover:bg-primaryOrangeHover transition-colors"

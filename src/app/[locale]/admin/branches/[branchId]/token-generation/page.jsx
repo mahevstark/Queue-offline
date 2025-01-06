@@ -6,6 +6,8 @@ import { toast } from 'react-hot-toast';
 import tokenService from '@/services/tokenService';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import logo from '@/assests/white.png';
 // Custom Modal Component
 const Modal = ({ isOpen, onClose, children }) => {
     if (!isOpen) return null;
@@ -280,9 +282,9 @@ export default function GenerateToken() {
     return (
         <div className="min-h-screen bg-primaryGreen p-6">
             <div className="max-w-4xl mx-auto my-10">
-                <h1 className="text-5xl text-white font-semibold mb-6 text-center p-4 rounded-xl">
-                    {t('title')}
-                </h1>
+            <div className="flex items-center justify-center overflow-hidden h-[100px] w-[500px] mx-auto">
+                <Image src={logo} alt="Logo" height={100} width={500} className="object-contain"/>
+            </div>
                 <hr className="border-t-2 border-slate-300 mb-6" />
                 
                 {/* Show loader only during initial loading */}
