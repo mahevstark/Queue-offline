@@ -185,7 +185,7 @@ export async function PUT(request, context) {
 // DELETE desk
 export async function DELETE(req, { params }) {
     try {
-        // Verify authentication
+        // Authentication checks...
         const authResult = await authMiddleware(req);
         if (authResult instanceof Response) return authResult;
         
@@ -196,11 +196,10 @@ export async function DELETE(req, { params }) {
                 { status: 403 }
             );
         }
+
         const { branchId, deskId } = params;
         const parsedDeskId = parseInt(deskId);
         const parsedBranchId = parseInt(branchId);
-
-        console.log('Attempting to delete desk:', { parsedDeskId, parsedBranchId });
 
         if (!parsedDeskId || !parsedBranchId) {
             return NextResponse.json(
@@ -209,11 +208,17 @@ export async function DELETE(req, { params }) {
             );
         }
 
-        // Check if desk exists
+        // Check if desk exists and fetch its relationships
         const desk = await prisma.desk.findFirst({
             where: {
                 id: parsedDeskId,
                 branchId: parsedBranchId
+            },
+            include: {
+                tokens: true,
+                deskServices: true,
+                deskSubServices: true,
+                employees: true,
             }
         });
 
@@ -224,39 +229,56 @@ export async function DELETE(req, { params }) {
             );
         }
 
-        console.log('Found desk to delete:', desk);
-
         // Delete all related records in a transaction
-        await prisma.$transaction([
-            // Update users who are assigned to this desk
-            prisma.user.updateMany({
-                where: { assignedDeskId: parsedDeskId },
-                data: { assignedDeskId: null }
-            }),
-            // Update users who manage this desk
-            prisma.user.updateMany({
-                where: { managedDeskId: parsedDeskId },
-                data: { managedDeskId: null }
-            }),
-            // Delete desk services
-            prisma.deskService.deleteMany({
-                where: { deskId: parsedDeskId }
-            }),
-            // Delete desk sub-services
-            prisma.deskSubService.deleteMany({
-                where: { deskId: parsedDeskId }
-            }),
-            // Delete tokens associated with the desk
-            prisma.token.deleteMany({
-                where: { deskId: parsedDeskId }
-            }),
-            // Finally, delete the desk itself
-            prisma.desk.delete({
-                where: { id: parsedDeskId }
-            })
-        ]);
+        await prisma.$transaction(async (prisma) => {
+            console.log('Starting deletion process for desk:', {
+                deskId: parsedDeskId,
+                relationships: {
+                    tokenCount: desk.tokens.length,
+                    serviceCount: desk.deskServices.length,
+                    subServiceCount: desk.deskSubServices.length,
+                    employeeCount: desk.employees.length
+                }
+            });
 
-        console.log('Desk deleted successfully');
+            // 1. Update tokens to remove desk reference
+            await prisma.token.updateMany({
+                where: { deskId: parsedDeskId },
+                data: {
+                    deskId: null,
+                    status: 'PENDING' // Reset status if needed
+                }
+            });
+
+            // 2. Delete desk sub-services
+            await prisma.deskSubService.deleteMany({
+                where: { deskId: parsedDeskId }
+            });
+
+            // 3. Delete desk services
+            await prisma.deskService.deleteMany({
+                where: { deskId: parsedDeskId }
+            });
+
+            // 4. Update users (employees and manager)
+            await prisma.user.updateMany({
+                where: {
+                    OR: [
+                        { assignedDeskId: parsedDeskId },
+                        { managedDeskId: parsedDeskId }
+                    ]
+                },
+                data: {
+                    assignedDeskId: null,
+                    managedDeskId: null
+                }
+            });
+
+            // 5. Finally delete the desk
+            await prisma.desk.delete({
+                where: { id: parsedDeskId }
+            });
+        });
 
         return NextResponse.json({
             success: true,
@@ -264,17 +286,22 @@ export async function DELETE(req, { params }) {
         });
 
     } catch (error) {
-        console.error('Detailed error in DELETE desk:', {
+        console.error('Detailed deletion error:', {
             message: error.message,
-            stack: error.stack,
-            name: error.name
+            code: error.code,
+            meta: error.meta,
+            stack: error.stack
         });
-        
+
         return NextResponse.json(
             { 
                 success: false, 
                 error: error.message || 'Failed to delete desk',
-                details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+                details: process.env.NODE_ENV === 'development' ? {
+                    message: error.message,
+                    code: error.code,
+                    meta: error.meta
+                } : undefined
             },
             { status: 500 }
         );

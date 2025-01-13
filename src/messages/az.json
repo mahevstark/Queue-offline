@@ -112,7 +112,7 @@
       "noData": {
         "noActivities": "Bugün üçün fəaliyyət qeydi yoxdur",
         "noMatching": "Uyğun fəaliyyət tapılmadı",
-        "noActiveToken": "Aktiv interval number yoxdur"
+        "noActiveToken": "-"
       },
       "logTypes": {
         "WORK_START": "İşə Başladı",
@@ -454,7 +454,8 @@
         "inactive": "Deaktiv"
       },
       "noServices": "Təyin edilmiş xidmət yoxdur",
-      "noSubServices": "Təyin edilmiş alt xidmət yoxdur"
+      "noSubServices": "Təyin edilmiş alt xidmət yoxdur",
+      "noDesks": "Masalar tapılmadı"
     },
     "tooltips": {
       "edit": "Masanı Düzənlə",

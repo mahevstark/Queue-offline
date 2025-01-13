@@ -114,7 +114,7 @@
             "noData": {
                 "noActivities": "No activity logs for today",
                 "noMatching": "No matching activities found",
-                "noActiveToken": "No active interval number"
+                "noActiveToken": "-"
 
             },
             "logTypes": {
@@ -458,7 +458,8 @@
             "inactive": "Inactive"
         },
         "noServices": "No services assigned",
-        "noSubServices": "No sub-services assigned"
+        "noSubServices": "No sub-services assigned",
+        "noDesks": "No desks found"
     },
     "tooltips": {
         "edit": "Edit Desk",

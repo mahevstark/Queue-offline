@@ -384,8 +384,16 @@ export default function DesksPage() {
                 <LoadingSpinner />
             ) : (
                 <div className="bg-white rounded-lg my-8 shadow-md">
-                    <Table className=''>
-                        <TableHeader>
+                    {
+                        paginatedDesks.length === 0 ? (
+                            <div className="flex items-center justify-center">
+                                <p className="py-8 flex items-center text-center w-full col-span-6 justify-center mx-auto">
+                                    {t('table.noDesks')}
+                                </p>
+                            </div>
+                        ) : (
+                            <Table className=''>
+                                <TableHeader>
                             <TableRow>
                                 {columns.map((column) => (
                                     <TableHead
@@ -409,6 +417,7 @@ export default function DesksPage() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
+                          
                             {paginatedDesks.map((desk) => (
                                 <TableRow key={desk.id}>
                                     {columns.map((column) => (
@@ -420,8 +429,10 @@ export default function DesksPage() {
                                     ))}
                                 </TableRow>
                             ))}
-                        </TableBody>
-                    </Table>
+                                </TableBody>
+                            </Table>
+                        )
+                    }
                 </div>
             )}
 

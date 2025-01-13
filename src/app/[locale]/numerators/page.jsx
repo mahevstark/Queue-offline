@@ -112,7 +112,7 @@ export default function NumeratorPage() {
             </div>
 
             {Object.entries(filteredNumerators).length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-center py-8 text-gray-500 flex items-center justify-center bg-white rounded-lg shadow-md p-6">
                     {t('noNumerators')}
                 </div>
             ) : (
