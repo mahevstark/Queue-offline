@@ -29,7 +29,7 @@ async function verifyAndUpdateLicense(user, licenseToken) {
 
     const license = jwt.decode(licenseToken);
     const currentSystemId = await getSystemId();
-    // const currentSystemId = '1234567890';
+   // const currentSystemId = '1234567890';
     console.log("License System Key:", license?.system_key);
     console.log("Current System ID:", currentSystemId);
 
