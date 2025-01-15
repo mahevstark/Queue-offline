@@ -772,11 +772,21 @@
         }
     },
     "buttons": {
-        "generateToken": "Generate Interval Number"
+        "generateToken": "Generate Interval Number",
+        "resetTokens": "Reset Interval Numbers"
     },
     "notifications": {
         "fetchError": "Failed to fetch numerators",
-        "branchError": "Failed to fetch branches"
+        "branchError": "Failed to fetch branches",
+        "resetSuccess": "Interval numbers reset successfully",
+        "resetError": "Failed to reset interval numbers"
+    },
+    "resetModal": {
+        "title": "Reset All Tokens",
+        "description": "Are you sure you want to reset all tokens for {branch}? This will cancel all pending tokens and reset the counter to initial values.",
+        "cancel": "Cancel",
+        "confirm": "Yes, Reset All",
+        "resetting": "Resetting..."
     }
 },
 "adminServices": {
