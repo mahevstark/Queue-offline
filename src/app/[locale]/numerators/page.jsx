@@ -3,11 +3,13 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { toast } from 'react-hot-toast';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import numeratorService from '@/services/numeratorService';
 import branchService from '@/services/branchService';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useAuth } from '@/hooks/useAuth';
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
 
 export default function NumeratorPage() {
     const t = useTranslations('numeratorsList');
@@ -17,6 +19,9 @@ export default function NumeratorPage() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [groupedNumerators, setGroupedNumerators] = useState({});
+    const [isResetModalOpen, setIsResetModalOpen] = useState(false);
+    const [resettingBranch, setResettingBranch] = useState(null);
+    const [isResetting, setIsResetting] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -73,6 +78,39 @@ export default function NumeratorPage() {
         router.push(`/admin/branches/${branchId}/token-generation`);
     };
 
+    const handleResetTokens = async (branchId, branchName) => {
+        setResettingBranch({ id: branchId, name: branchName });
+        setIsResetModalOpen(true);
+    };
+
+    const confirmReset = async () => {
+        try {
+            setIsResetting(true);
+            const response = await fetch(`/api/branches/${resettingBranch.id}/tokens/reset`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                toast.success(t('notifications.resetSuccess'));
+                await fetchNumerators(); // Refresh the data
+            } else {
+                throw new Error(data.error || t('notifications.resetError'));
+            }
+        } catch (error) {
+            console.error('Error resetting tokens:', error);
+            toast.error(error.message || t('notifications.resetError'));
+        } finally {
+            setIsResetting(false);
+            setIsResetModalOpen(false);
+            setResettingBranch(null);
+        }
+    };
+
     // Filter numerators based on search term
     const filteredNumerators = Object.entries(groupedNumerators).reduce((acc, [branchName, data]) => {
         const filtered = data.numerators.filter(numerator => 
@@ -112,14 +150,22 @@ export default function NumeratorPage() {
             </div>
 
             {Object.entries(filteredNumerators).length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-center py-8 text-gray-500 flex items-center justify-center bg-white rounded-lg shadow-md p-6">
                     {t('noNumerators')}
                 </div>
             ) : (
                 <div className="space-y-6">
                     {Object.entries(filteredNumerators).map(([branchName, data]) => (
                         <div key={branchName} className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-semibold text-primaryGreen mb-4">{branchName}</h2>
+                            <div className="flex justify-between items-center mb-4">
+                                <h2 className="text-xl font-semibold text-primaryGreen">{branchName}</h2>
+                                <button
+                                    onClick={() => handleResetTokens(data.branchId, branchName)}
+                                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+                                >
+                                    {t('buttons.resetTokens')}
+                                </button>
+                            </div>
                             
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {data.numerators.map(numerator => (
@@ -161,6 +207,81 @@ export default function NumeratorPage() {
                     ))}
                 </div>
             )}
+
+            {/* Reset Confirmation Modal */}
+            <Transition show={isResetModalOpen} as={Fragment}>
+                <Dialog 
+                    as="div" 
+                    className="relative z-50"
+                    onClose={() => !isResetting && setIsResetModalOpen(false)}
+                >
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black/25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <div className="flex items-center justify-center mb-4 text-red-500">
+                                        <ExclamationTriangleIcon className="h-12 w-12" />
+                                    </div>
+                                    
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-medium leading-6 text-gray-900 text-center"
+                                    >
+                                        {t('resetModal.title')}
+                                    </Dialog.Title>
+
+                                    <div className="mt-4">
+                                        <p className="text-sm text-gray-500 text-center">
+                                            {t('resetModal.description', { branch: resettingBranch?.name })}
+                                        </p>
+                                    </div>
+
+                                    <div className="mt-6 flex justify-center space-x-4">
+                                        <button
+                                            type="button"
+                                            className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+                                            onClick={() => setIsResetModalOpen(false)}
+                                            disabled={isResetting}
+                                        >
+                                            {t('resetModal.cancel')}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className={`inline-flex justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 ${
+                                                isResetting ? 'opacity-50 cursor-not-allowed' : ''
+                                            }`}
+                                            onClick={confirmReset}
+                                            disabled={isResetting}
+                                        >
+                                            {isResetting ? t('resetModal.resetting') : t('resetModal.confirm')}
+                                        </button>
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
         </div>
     );
 }

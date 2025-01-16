@@ -112,7 +112,7 @@
       "noData": {
         "noActivities": "Bugün üçün fəaliyyət qeydi yoxdur",
         "noMatching": "Uyğun fəaliyyət tapılmadı",
-        "noActiveToken": "Aktiv interval number yoxdur"
+        "noActiveToken": "-"
       },
       "logTypes": {
         "WORK_START": "İşə Başladı",
@@ -454,7 +454,8 @@
         "inactive": "Deaktiv"
       },
       "noServices": "Təyin edilmiş xidmət yoxdur",
-      "noSubServices": "Təyin edilmiş alt xidmət yoxdur"
+      "noSubServices": "Təyin edilmiş alt xidmət yoxdur",
+      "noDesks": "Masalar tapılmadı"
     },
     "tooltips": {
       "edit": "Masanı Düzənlə",
@@ -1026,11 +1027,21 @@
       }
     },
     "buttons": {
-      "generateToken": "Interval Number Yarat"
+      "generateToken": "Interval Number Yarat",
+      "resetTokens": "Interval Numberları Sıfırla"
     },
     "notifications": {
       "fetchError": "Numeratorları yükləmək alınmadı",
-      "branchError": "Filialları yükləmək alınmadı"
+      "branchError": "Filialları yükləmək alınmadı",
+      "resetSuccess": "Interval numberlar uğurla sıfırlanıldı",
+      "resetError": "Interval numberları sıfırlamaq alınmadı"
+    },
+    "resetModal": {
+      "title": "Interval Numberları Sıfırla",
+      "description": "Interval numberları sıfırlamaq istədiyinizə əminsiniz? Bu interval numberlarının bütün gözləməli interval numberları sıfırlanılacaq və counter başlanğıc dəyərləri ilə sıfırlanacaq.",
+      "cancel": "Ləğv et",
+      "confirm": "Bəli, Sıfırla",
+      "resetting": "Sıfırlanır..."
     }
   },
   "tokenGeneration": {

@@ -105,10 +105,7 @@ export async function PUT(request, { params }) {
         const { role } = authResult;
         if (!['MANAGER', 'SUPERADMIN'].includes(role)) {
             return NextResponse.json(
-                { 
-                    success: false, 
-                    error: 'Unauthorized access' 
-                },
+                { success: false, error: 'Unauthorized access' },
                 { status: 403 }
             );
         }
@@ -116,7 +113,37 @@ export async function PUT(request, { params }) {
         const { branchId, seriesId } = params;
         const updateData = await request.json();
 
-        // Check if there's an active series for this service
+        // First get the current series data
+        const currentSeries = await prisma.tokenSeries.findUnique({
+            where: {
+                id: parseInt(seriesId),
+                branchId: parseInt(branchId)
+            }
+        });
+
+        if (!currentSeries) {
+            return NextResponse.json(
+                { success: false, error: 'Token series not found' },
+                { status: 404 }
+            );
+        }
+
+        // When updating startFrom, we need to reset currentNumber to the new startFrom value
+        // This ensures the next token will start from the new range
+        const newCurrentNumber = parseInt(updateData.startFrom) - 1;
+
+        // Validate that the new current number doesn't exceed the new end range
+        if (newCurrentNumber >= parseInt(updateData.endAt)) {
+            return NextResponse.json(
+                { 
+                    success: false, 
+                    error: 'Invalid range: startFrom must be less than endAt' 
+                },
+                { status: 400 }
+            );
+        }
+
+        // Check for active series conflict
         if (updateData.active) {
             const existingSeries = await prisma.tokenSeries.findFirst({
                 where: {
@@ -166,6 +193,7 @@ export async function PUT(request, { params }) {
                 prefix: updateData.prefix?.toUpperCase(),
                 startFrom: parseInt(updateData.startFrom),
                 endAt: parseInt(updateData.endAt),
+                currentNumber: newCurrentNumber,
                 serviceId: parseInt(updateData.serviceId),
                 active: updateData.active
             },
@@ -185,17 +213,6 @@ export async function PUT(request, { params }) {
         });
     } catch (error) {
         console.error('Error updating token series:', error);
-        
-        if (error.code === 'P2025') {
-            return NextResponse.json(
-                { 
-                    success: false, 
-                    error: 'Token series not found' 
-                },
-                { status: 404 }
-            );
-        }
-
         return NextResponse.json(
             { 
                 success: false, 
